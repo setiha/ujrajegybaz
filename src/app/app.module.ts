@@ -5,10 +5,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {CollapseModule} from "ngx-bootstrap/collapse";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { JumbotronComponent } from './jumbotron/jumbotron.component';
+import { EventcardComponent } from './eventcard/eventcard.component';
+import { FooterComponent } from './footer/footer.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    JumbotronComponent,
+    EventcardComponent,
+    FooterComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
