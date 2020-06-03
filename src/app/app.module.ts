@@ -9,6 +9,7 @@ import { JumbotronComponent } from './jumbotron/jumbotron.component';
 import { EventcardComponent } from './eventcard/eventcard.component';
 import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { EventComponent } from './event/event.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     JumbotronComponent,
     EventcardComponent,
     FooterComponent,
-    NavbarComponent
+    NavbarComponent,
+    EventComponent
   ],
   imports: [
     BrowserModule,
