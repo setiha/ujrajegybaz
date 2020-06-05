@@ -7,11 +7,15 @@ import {TicketComponent} from './ticket/ticket.component';
 import {AboutComponent} from './about/about.component';
 import {LoginComponent} from './login/login.component';
 import {RegisterComponent} from './register/register.component';
+import {EventListComponent} from './event-list/event-list.component';
+import {EventDetailComponent} from './event-detail/event-detail.component';
 
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'event', component: EventComponent},
+  {path:  'event/list', component: EventListComponent},
+  {path:  'event/:id/edit', component: EventDetailComponent},
   {path: 'ticket', component: TicketComponent},
   {path: 'about', component: AboutComponent},
   {path: 'login', component: LoginComponent},
@@ -32,6 +36,8 @@ export class AppRoutingModule {
     TicketComponent,
     AboutComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    EventListComponent,
+    EventDetailComponent
   ];
 }

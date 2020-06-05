@@ -9,6 +9,7 @@ import { JumbotronComponent } from './jumbotron/jumbotron.component';
 import { EventcardComponent } from './eventcard/eventcard.component';
 import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { EventListComponent } from './event-list/event-list.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     EventcardComponent,
     FooterComponent,
     NavbarComponent,
-    ...AppRoutingModule.routableComponent
+    ...AppRoutingModule.routableComponent,
+    EventListComponent
   ],
   imports: [
     BrowserModule,
