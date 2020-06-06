@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
 import {HomeComponent} from './home/home.component';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {EventComponent} from './event/event.component';
@@ -13,9 +13,16 @@ import {EventDetailComponent} from './event-detail/event-detail.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
-  {path: 'event', component: EventComponent},
-  {path:  'event/list', component: EventListComponent},
-  {path:  'event/:id/edit', component: EventDetailComponent},
+  {
+    path: 'event', component: EventComponent,
+    children: [
+      {path: 'list', component: EventListComponent},
+      {path: 'new', component: EventDetailComponent},
+      {path: ':id/edit', component: EventDetailComponent},
+
+    ]
+  },
+
   {path: 'ticket', component: TicketComponent},
   {path: 'about', component: AboutComponent},
   {path: 'login', component: LoginComponent},
