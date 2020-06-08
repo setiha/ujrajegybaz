@@ -12,7 +12,7 @@ public events: EventModel[];
 
   constructor(private _eventService: EventService) {
     this.events = this._eventService.getAllEvents();
-    console.log(this.events);
+
   }
 
   ngOnInit(): void {
