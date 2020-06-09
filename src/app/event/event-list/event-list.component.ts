@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {EventService} from '../../shared/event.service';
 import {EventModel} from '../../shared/event-model';
 
@@ -8,14 +8,21 @@ import {EventModel} from '../../shared/event-model';
   styleUrls: ['./event-list.component.css']
 })
 export class EventListComponent implements OnInit {
-public events: EventModel[];
+  public eventsGrouppedBy3: EventModel[];
 
   constructor(private _eventService: EventService) {
-    this.events = this._eventService.getAllEvents();
-
   }
 
   ngOnInit(): void {
+    this.eventsGrouppedBy3 = this._eventService.getAllEvents().reduce((acc, curr: EventModel, ind: number) => {
+      console.log("acc:", acc)
+      if (ind % 3 === 0) {
+        acc.push([]);
+      }
+      acc[acc.length - 1].push(curr);
+      return acc;
+    }, []);
+
   }
 
 }
