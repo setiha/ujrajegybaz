@@ -15,7 +15,7 @@ export class EventListComponent implements OnInit {
 
   ngOnInit(): void {
     this.eventsGrouppedBy3 = this._eventService.getAllEvents().reduce((acc, curr: EventModel, ind: number) => {
-      console.log("acc:", acc)
+
       if (ind % 3 === 0) {
         acc.push([]);
       }
