@@ -10,7 +10,8 @@ import { EventcardComponent } from './event/eventcard/eventcard.component';
 import { FooterComponent } from './core/footer/footer.component';
 import { NavbarComponent } from './core/navbar/navbar.component';
 import { EventListComponent } from './event/event-list/event-list.component';
-import {EventService} from "./shared/event.service";
+import {EventService} from './shared/event.service';
+import {UserService} from './shared/user.service';
 
 
 @NgModule({
@@ -29,7 +30,7 @@ import {EventService} from "./shared/event.service";
     AppRoutingModule,
     CollapseModule.forRoot()
   ],
-  providers: [EventService],
+  providers: [EventService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

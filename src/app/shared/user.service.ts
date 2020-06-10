@@ -22,4 +22,19 @@ export class UserService {
     }
     return false;
   }
+  register(param?: UserModel){
+    if (param){
+      this._user = new UserModel(param);
+    }else{
+      this._user = new UserModel(UserModel.exampleUser);
+    }
+    this.isLoggedin = true;
+    this._router.navigate(['/user']);
+  }
+
+  logout(){
+    this._user = new UserModel();
+    this.isLoggedin = false;
+    this._router.navigate(['/home']);
+  }
 }
