@@ -10,8 +10,10 @@
         <a class="nav-item nav-link" routerLinkActive="active" routerLink = "/event/list" >Események</a>
         <a class="nav-item nav-link" routerLink = "/ticket/list" routerLinkActive="active" >Jegyek</a>
         <a class="nav-item nav-link"  routerLink = "/about" routerLinkActive="active">Rólunk</a>
+        <ng-container *ngIf="!userService.isLoggedin">
         <a class="nav-item nav-link" routerLink = "/user/login" routerLinkActive="active" >Belépés</a>
         <a class="nav-item nav-link btn btn-primary text-light ml-lg-2 btn-sm" routerLink = "/user/register" routerLinkActive="active">Regisztráció</a>
+        </ng-container>
         <a class="nav-item nav-link" routerLinkActive="active" (click)="logout()" >Logout</a>
       </div>
     </div>
