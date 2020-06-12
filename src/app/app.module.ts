@@ -12,6 +12,7 @@ import { NavbarComponent } from './core/navbar/navbar.component';
 import { EventListComponent } from './event/event-list/event-list.component';
 import {EventService} from './shared/event.service';
 import {UserService} from './shared/user.service';
+import {AlertModule} from 'ngx-bootstrap/alert';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import {UserService} from './shared/user.service';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    CollapseModule.forRoot()
+    CollapseModule.forRoot(),
+    AlertModule.forRoot()
   ],
   providers: [EventService, UserService],
   bootstrap: [AppComponent]

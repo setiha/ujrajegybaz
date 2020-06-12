@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {UserService} from "../../shared/user.service";
+import {Component, OnInit} from '@angular/core';
+import {UserService} from '../../shared/user.service';
 
 @Component({
   selector: 'app-login',
@@ -7,12 +7,20 @@ import {UserService} from "../../shared/user.service";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  public error: string;
 
-  constructor(private _userService: UserService) { }
+  constructor(private _userService: UserService) {
+  }
 
   ngOnInit(): void {
   }
-login(email: string, password: string){
-this._userService.login(email, password);
-}
+
+  login(email: string, password: string) {
+    if (!this._userService.login(email, password)){
+      this.error = 'Hiba a belepesi adatokban. Probald ujra vagy igyal egy kavet';
+    }
+  }
+  clearError(){
+    delete(this.error);
+  }
 }
