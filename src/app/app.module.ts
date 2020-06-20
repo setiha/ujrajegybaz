@@ -13,6 +13,7 @@ import { EventListComponent } from './event/event-list/event-list.component';
 import {EventService} from './shared/event.service';
 import {UserService} from './shared/user.service';
 import {AlertModule} from 'ngx-bootstrap/alert';
+import { TicketModelComponent } from './ticket-model/ticket-model.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import {AlertModule} from 'ngx-bootstrap/alert';
     FooterComponent,
     NavbarComponent,
     ...AppRoutingModule.routableComponent,
-    EventListComponent
+    EventListComponent,
+    TicketModelComponent
   ],
   imports: [
     BrowserModule,
