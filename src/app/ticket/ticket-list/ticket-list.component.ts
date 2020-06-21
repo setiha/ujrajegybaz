@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {TicketService} from '../../shared/ticket.service';
+import {UserService} from '../../shared/user.service';
+import {TicketModel} from '../../shared/ticket-model';
 
 @Component({
   selector: 'app-ticket-list',
@@ -6,10 +9,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./ticket-list.component.css']
 })
 export class TicketListComponent implements OnInit {
+public tickets: {};
+  constructor(private _ticketService: TicketService, private _userService: UserService) {}
 
-  constructor() { }
-
-  ngOnInit(): void {
+  ngOnInit() {
+    this.tickets = this._ticketService.getAllTickets();
   }
 
 }

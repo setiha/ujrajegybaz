@@ -76,4 +76,8 @@ private _events: EventModel[];
   getAllEvents(): EventModel[] {
   return this._events;
   }
+  getEventById(id: number){
+    const ev = this._events.filter(x => x.id === id);
+    return ev.length > 0 ? ev[0] : new EventModel(EventModel.emptyEvent);
+  }
 }

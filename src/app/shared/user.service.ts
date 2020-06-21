@@ -9,9 +9,35 @@ export class UserService {
   isLoggedin = false;
 
   private _user: UserModel;
+  private _allUsers: UserModel[];
 
   constructor(private _router: Router) {
-
+this._allUsers = [
+  new UserModel({
+    'id':1,
+    'name': 'Pista ba',
+    'email':'pistaba@gmail.com',
+    'address': 'pistaba lak 12',
+    'dateOfBirth': '1900-01-01',
+    'gender': 'male'
+  }),
+  new UserModel({
+    'id':2,
+    'name': 'Tokany',
+    'email':'pistaba@gmail.com',
+    'address': 'pistaba lak 12',
+    'dateOfBirth': '1900-01-01',
+    'gender': 'male'
+  }),
+  new UserModel({
+    'id':3,
+    'name': 'Lacika',
+    'email':'pistaba@gmail.com',
+    'address': 'pistaba lak 12',
+    'dateOfBirth': '1900-01-01',
+    'gender': 'male'
+  })
+];
   }
 
   login(email: string, password: string) {
@@ -36,5 +62,9 @@ export class UserService {
     this._user = new UserModel();
     this.isLoggedin = false;
     this._router.navigate(['/home']);
+  }
+  getUserById(id: number){
+    const user = this._allUsers.filter(u => u.id === id);
+    return user.length > 0 ? user[0] : new UserModel(UserModel.emptyUser);
   }
 }

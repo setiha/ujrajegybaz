@@ -1,5 +1,5 @@
-import {EventModel} from "./event-model";
-import {UserModel} from "./user-model";
+import {EventModel} from './event-model';
+import {UserModel} from './user-model';
 export class TicketModel {
   id: number;
   date: string;
@@ -19,4 +19,5 @@ export class TicketModel {
     Object.assign(this, param);
   }
 }
+
 

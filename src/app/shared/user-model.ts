@@ -22,5 +22,16 @@ export class UserModel {
       gender: 'female'
     };
   }
+
+  static get emptyUser(): UserModel {
+    return {
+      id: 0,
+      name: '',
+      email: 'l',
+      address: '',
+      dateOfBirth: '',
+      gender: '',
+    };
+  }
+
 }
-console.log(UserModel.exampleUser);
