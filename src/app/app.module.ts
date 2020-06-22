@@ -13,6 +13,8 @@ import { EventListComponent } from './event/event-list/event-list.component';
 import {EventService} from './shared/event.service';
 import {UserService} from './shared/user.service';
 import {AlertModule} from 'ngx-bootstrap/alert';
+import {TicketService} from './shared/ticket.service';
+import {LoggedInGuard} from './shared/logged-in.guard';
 
 
 
@@ -34,7 +36,7 @@ import {AlertModule} from 'ngx-bootstrap/alert';
     CollapseModule.forRoot(),
     AlertModule.forRoot()
   ],
-  providers: [EventService, UserService],
+  providers: [EventService, UserService, TicketService, LoggedInGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
