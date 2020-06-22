@@ -22,6 +22,17 @@ export class TicketService {
         'bidStartDate': '2017-11-05',
         'eventId': 1,
         'sellerUserId': 1
+      }),
+      new TicketModel( <TicketModel> {
+        'id': 2,
+        'date': '2018-05-02',
+        'artist': 'Diótörő Balett',
+        'numberOfTickets': 5,
+        'minimalBidPrice': 200,
+        'bidStep': 500,
+        'bidStartDate': '2017-11-05',
+        'eventId': 2,
+        'sellerUserId': 2
       })
     ];
   }

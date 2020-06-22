@@ -39,7 +39,8 @@
 
     <tbody>
     <tr *ngFor="let ticket of tickets">
-      <td scope="row" ><a [routerLink]="['/event', ticket.eventId]">{{ticket.event.name}}</a></td>
+      <td scope="row" >
+        <a [routerLink]="['/event', ticket.eventId]">{{ticket.event.name}}</a></td>
       <td>{{ticket.date}}</td>
       <td class="d-none d-md-table-cell">{{ticket.seller.name}}</td>
       <td class="d-none d-md-table-cell">{{ticket.numberOfTickets}}</td>
