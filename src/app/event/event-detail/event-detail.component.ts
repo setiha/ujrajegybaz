@@ -19,8 +19,7 @@ export class EventDetailComponent implements OnInit {
     const evId = +this._route.snapshot.params['id'];
     if (evId) {
       this.event = this._eventService.getEventById(evId);
-      console.log(evId);
-      console.log('event', this.event);
+
     } else {
       this.event = new EventModel(EventModel.emptyEvent);
 
@@ -30,11 +29,10 @@ export class EventDetailComponent implements OnInit {
 
   onSubmit(form) {
     if (this.event.id){
-      console.log('update agban vagyunk');
 
       this._eventService.update(this.event);
     }else{
-      console.log('create agban vagyunk');
+
       this._eventService.create(this.event);
     }
     this._router.navigate(['/event/list']);

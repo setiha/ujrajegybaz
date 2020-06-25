@@ -84,7 +84,18 @@ export class EventService {
     return ev.length > 0 ? ev[0] : new EventModel(EventModel.emptyEvent);
   }
 
-  update(ev: EventModel) {
+  update(param: EventModel) {
+    this._events = this._events.map(ev => {
+      if (ev.id === param.id) {
+        console.log('fasszom:', param.pictureURL);
+        ;
+        return {...param};
+      }else{
+
+        return ev;
+      }
+    });
+
   }
 
   create(param: EventModel) {
@@ -92,12 +103,13 @@ export class EventService {
     this._events = [
       ...this._events,
       {
-        id: this._getMaxId() + 1 ,
+        id: this._getMaxId() + 1,
         ...param
       }
     ];
   }
-  private _getMaxId(){
+
+  private _getMaxId() {
     return this._events.reduce((x, y) => x.id > y.id ? x : y).id;
   }
 }
