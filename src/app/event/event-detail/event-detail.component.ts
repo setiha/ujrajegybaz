@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
+import {EventService} from "../../shared/event.service";
+import {EventModel} from "../../shared/event-model";
 
 @Component({
   selector: 'app-event-detail',
@@ -6,10 +9,34 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./event-detail.component.css']
 })
 export class EventDetailComponent implements OnInit {
+  event: EventModel;
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(private _route: ActivatedRoute, private _eventService: EventService, private _router: Router) {
   }
 
+  ngOnInit(): void {
+
+    const evId = +this._route.snapshot.params['id'];
+    if (evId) {
+      this.event = this._eventService.getEventById(evId);
+      console.log(evId);
+      console.log('event', this.event);
+    } else {
+      this.event = new EventModel(EventModel.emptyEvent);
+
+    }
+
+  }
+
+  onSubmit(form) {
+    if (this.event.id){
+      console.log('update agban vagyunk');
+
+      this._eventService.update(this.event);
+    }else{
+      console.log('create agban vagyunk');
+      this._eventService.create(this.event);
+    }
+    this._router.navigate(['/event/list']);
+  }
 }
