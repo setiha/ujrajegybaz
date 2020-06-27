@@ -1,11 +1,11 @@
 {
   "hosting": {
-    "public": "dist",
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
+    "firebase": "jegybazar-133bd",
+    "public": "dist/jegybaz",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
     ]
   }
 }
