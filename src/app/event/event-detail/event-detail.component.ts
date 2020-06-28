@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {EventService} from "../../shared/event.service";
-import {EventModel} from "../../shared/event-model";
+import {EventService} from '../../shared/event.service';
+import {EventModel} from '../../shared/event-model';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-event-detail',
@@ -11,7 +12,7 @@ import {EventModel} from "../../shared/event-model";
 export class EventDetailComponent implements OnInit {
   event: EventModel;
 
-  constructor(private _route: ActivatedRoute, private _eventService: EventService, private _router: Router) {
+  constructor(private _route: ActivatedRoute, private _eventService: EventService, private _location: Location) {
   }
 
   ngOnInit(): void {
@@ -35,6 +36,7 @@ export class EventDetailComponent implements OnInit {
 
       this._eventService.create(this.event);
     }
-    this._router.navigate(['/event/list']);
+
+    this._location.back();
   }
 }

@@ -87,8 +87,6 @@ export class EventService {
   update(param: EventModel) {
     this._events = this._events.map(ev => {
       if (ev.id === param.id) {
-        console.log('fasszom:', param.pictureURL);
-        ;
         return {...param};
       }else{
 
