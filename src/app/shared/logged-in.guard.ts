@@ -2,12 +2,13 @@ import {Injectable} from '@angular/core';
 import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {UserService} from './user.service';
+import {Location} from "@angular/common";
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoggedInGuard implements CanActivate {
-  constructor(private _userService: UserService, private _router: Router) {
+  constructor(private _userService: UserService, private _router: Router, private _location: Location) {
 
   }
 
@@ -16,7 +17,7 @@ export class LoggedInGuard implements CanActivate {
     if (this._userService.isLoggedin) {
       return true;
     } else {
-      this._router.navigate(['/home']);
+      this._router.navigate([this._location.path()]);
       return false;
     }
   }
