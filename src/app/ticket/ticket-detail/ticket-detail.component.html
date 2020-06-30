@@ -13,10 +13,11 @@
       <div class="form-group">
         <label for="select">Esemény választása</label>
         <select class="form-control" id="select"
-                [(ngModel)]="ticket.eventId" name="eventId" required>
+                [(ngModel)]="ticket.eventId" name="eventId" required #event="ngModel">
           <option selected hidden disabled value="0">Valassz egy esemenyt!</option>
           <option *ngFor="let ev of events" [value]=ev.id>{{ev.name}}</option>
         </select>
+        <alert type="danger" *ngIf="event.touched && event.pristine">Kotelezo mezo</alert>
       </div>
 
       <div class="form-group">
