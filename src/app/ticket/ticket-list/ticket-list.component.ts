@@ -9,7 +9,7 @@ import {TicketModel} from '../../shared/ticket-model';
   styleUrls: ['./ticket-list.component.css']
 })
 export class TicketListComponent implements OnInit {
-public tickets: {};
+public tickets: TicketModel[];
   constructor(private _ticketService: TicketService, private _userService: UserService) {}
 
   ngOnInit() {
