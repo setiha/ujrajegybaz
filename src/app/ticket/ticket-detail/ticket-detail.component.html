@@ -23,12 +23,14 @@
       <div class="form-group">
         <label for="idopont">Időpont</label>
         <input type="date" class="form-control mb-3" id="idopont" placeholder="időpont" [(ngModel)]="ticket.date"
-               name="date">
+               name="date" #date="ngModel">
+        <alert type="danger" *ngIf="date.touched && date.pristine">Kotelezo mezo</alert>
       </div>
       <div class="form-group">
         <label for="darab">Darabszám</label>
         <input type="number" class="form-control mb-3" id="darab" placeholder="darabszám"
-               [(ngModel)]="ticket.numberOfTickets" name="numberOfTyckets">
+               [(ngModel)]="ticket.numberOfTickets" name="numberOfTyckets" #ticketNumber="ngModel">
+        <alert type="danger" *ngIf="ticketNumber.touched && ticketNumber.pristine">Kotelezo mezo</alert>
       </div>
 
       <h3 class="my-3">Licit beállítások</h3>
