@@ -36,6 +36,14 @@ this._allUsers = [
     'address': 'pistaba lak 12',
     'dateOfBirth': '1900-01-01',
     'gender': 'male'
+  }),
+  new UserModel({
+    'id': 0,
+    'name': 'Legyek Reka Matilda',
+    'email': 'legyekrekamatilda.com',
+    'address': 'Futrinka utca',
+    'dateOfBirth': '2001.01.01',
+    'gender': 'female'
   })
 ];
   }
@@ -64,7 +72,7 @@ this._allUsers = [
     this._router.navigate(['/home']);
   }
   getUserById(id: number){
-    const user = this._allUsers.filter(u => u.id === id);
+    const user = this._allUsers.filter(u => u.id === +id);
     return user.length > 0 ? user[0] : new UserModel(UserModel.emptyUser);
   }
   getCurrentUser(){

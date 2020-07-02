@@ -24,13 +24,13 @@ const routes: Routes = [
     children: [
       {path: 'list', component: EventListComponent},
       {path: 'new', component: EventDetailComponent, canActivate: [LoggedInGuard]},
-      {path: ':id/edit', component: EventDetailComponent, canActivate: [LoggedInGuard]}
+      {path: ':id/edit', component: EventDetailComponent}
     ]
   },
   {
     path: 'ticket', component: TicketComponent,
     children: [
-      {path: 'list', component: TicketListComponent},
+      {path: '', component: TicketListComponent},
       {path: 'new', component: TicketDetailComponent, canActivate: [LoggedInGuard]},
       {path: ':id/bid', component: BidComponent, canActivate: [LoggedInGuard]}
     ]

@@ -8,7 +8,7 @@
       <div class="navbar-nav ml-auto">
         <a class="nav-item nav-link" routerLinkActive="active" routerLink = "/home">Home</a>
         <a class="nav-item nav-link" routerLinkActive="active" routerLink = "/event/list" >Események</a>
-        <a class="nav-item nav-link" routerLink = "/ticket/list" routerLinkActive="active" >Jegyek</a>
+        <a class="nav-item nav-link" routerLink = "/ticket" routerLinkActive="active" >Jegyek</a>
         <a class="nav-item nav-link"  routerLink = "/about" routerLinkActive="active">Rólunk</a>
         <ng-container *ngIf="!userService.isLoggedin; else loggedInBlock">
         <a class="nav-item nav-link" routerLink = "/user/login" routerLinkActive="active" >Belépés</a>
