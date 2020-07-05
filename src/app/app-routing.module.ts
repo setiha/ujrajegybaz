@@ -41,7 +41,7 @@ const routes: Routes = [
     {path: '', component: ProfileComponent, canActivate: [LoggedInGuard]},
     {path: 'edit', component: ProfileEditComponent, canActivate: [LoggedInGuard]},
     {path: 'login', component: LoginComponent},
-    {path: 'register', component: RegisterComponent}
+    {path: 'register', component: ProfileEditComponent}
   ]
   },
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -60,7 +60,6 @@ export class AppRoutingModule {
     TicketComponent,
     AboutComponent,
     LoginComponent,
-    RegisterComponent,
     EventListComponent,
     EventDetailComponent,
     ProfileComponent,
