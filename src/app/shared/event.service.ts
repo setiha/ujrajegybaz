@@ -1,5 +1,10 @@
 import {Injectable} from '@angular/core';
 import {EventModel} from "./event-model";
+import {HttpClient} from '@angular/common/http';
+import {$} from "protractor";
+import {environment} from "../../environments/environment";
+import {Observable} from "rxjs/index";
+import {map} from "rxjs/internal/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +12,7 @@ import {EventModel} from "./event-model";
 export class EventService {
   private _events: EventModel[];
 
-  constructor() {
+  constructor(private _http: HttpClient) {
     this._events = [
       {
         'id': 1,
@@ -75,39 +80,39 @@ export class EventService {
     ];
   }
 
-  getAllEvents(): EventModel[] {
-    return this._events;
+  getAllEvents(): Observable<any> {
+    return this._http.get(`${environment.firebase.baseUrl}/events.json`).pipe(map(data => Object.keys(data).map(key => data[key])));
   }
 
   getEventById(id: number) {
-    const ev = this._events.filter(x => x.id === +id);
-    return ev.length > 0 ? ev[0] : new EventModel(EventModel.emptyEvent);
+   /* const ev = this._events.filter(x => x.id === +id);
+    return ev.length > 0 ? ev[0] : new EventModel(EventModel.emptyEvent);*/
   }
 
   update(param: EventModel) {
-    this._events = this._events.map(ev => {
+    /*this._events = this._events.map(ev => {
       if (ev.id === param.id) {
         return {...param};
-      }else{
+      } else {
 
         return ev;
       }
-    });
+    });*/
 
   }
 
   create(param: EventModel) {
-    //noinspection TypeScriptValidateTypes
+   /* //noinspection TypeScriptValidateTypes
     this._events = [
       ...this._events,
       {
         id: this._getMaxId() + 1,
         ...param
       }
-    ];
+    ];*/
   }
 
   private _getMaxId() {
-    return this._events.reduce((x, y) => x.id > y.id ? x : y).id;
+   /* return this._events.reduce((x, y) => x.id > y.id ? x : y).id;*/
   }
 }

@@ -13,7 +13,7 @@ public tickets: TicketModel[];
   constructor(private _ticketService: TicketService, private _userService: UserService) {}
 
   ngOnInit() {
-    this.tickets = this._ticketService.getAllTickets();
+    /*this.tickets = this._ticketService.getAllTickets();
+     }*/
   }
-
 }

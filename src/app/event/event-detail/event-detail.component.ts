@@ -21,7 +21,7 @@ export class EventDetailComponent implements OnInit {
 
     const evId = +this._route.snapshot.params['id'];
     if (evId) {
-      this.event = this._eventService.getEventById(evId);
+      /*this.event = this._eventService.getEventById(evId);*/
     } else {
       this.event = new EventModel(EventModel.emptyEvent);
       this.editForm = true;
