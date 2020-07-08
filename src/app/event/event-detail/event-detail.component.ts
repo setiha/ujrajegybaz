@@ -14,32 +14,35 @@ export class EventDetailComponent implements OnInit {
   event: EventModel;
   editForm = false;
 
-  constructor(private _route: ActivatedRoute, private _eventService: EventService, private _location: Location, public userService: UserService) {
+  constructor(private _route: ActivatedRoute,
+              private _eventService: EventService,
+              private _location: Location,
+              public userService: UserService) {
   }
 
   ngOnInit(): void {
 
-    const evId = +this._route.snapshot.params['id'];
+    const evId = this._route.snapshot.params['id'];
+    this.event = new EventModel(EventModel.emptyEvent);
     if (evId) {
-      /*this.event = this._eventService.getEventById(evId);*/
-    } else {
-      this.event = new EventModel(EventModel.emptyEvent);
+      this._eventService.getEventById(evId).subscribe(evm => this.event = evm);
       this.editForm = true;
     }
-
   }
 
+
   onSubmit() {
-    if (this.event.id){
+    if (this.event.id) {
 
       this._eventService.update(this.event);
-    }else{
+    } else {
 
       this._eventService.create(this.event);
     }
 
     this._location.back();
   }
+
   navigateBack() {
     this._location.back();
   }
