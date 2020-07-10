@@ -1,35 +1,41 @@
 import {Injectable} from '@angular/core';
-import {Router} from "@angular/router";
-import {UserModel} from "./user-model";
-
-@Injectable({
-  providedIn: 'root'
-})
+import {Router} from '@angular/router';
+import {UserModel} from './user-model';
+import {Observable} from 'rxjs';
+import {FirebaseLoginModel} from './firebase-login-model';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../environments/environment';
+import { switchMap } from 'rxjs/operators';
+import {tap} from "rxjs/internal/operators";
+@Injectable()
 export class UserService {
   isLoggedin = false;
-  lessons = true;
 
   private _user: UserModel;
   private _allUsers: UserModel[];
-
-  constructor(private _router: Router) {
+  constructor(private _router: Router,
+              private _http: HttpClient) {
     this._allUsers = this._getMockData();
   }
 
-  login(email: string, password: string) {
-    if (email === 'angular' && password === 'angular') {
-      this._user = this._allUsers[2];
-      this.isLoggedin = true;
-      return true;
-    }
-    return false;
+  login(email: string, password: string): Observable<UserModel> {
+    return this._http.post<FirebaseLoginModel>(
+      `${environment.firebase.loginUrl}?key=${environment.firebase.apikey}`,
+      {
+        'email': email,
+        'password': password,
+        'returnSecureToken': true
+      })
+      .pipe(switchMap(fbLogin => this._http.get<UserModel>(`${environment.firebase.baseUrl}/users/${fbLogin.localId}.json`))).pipe(tap(user => this.isLoggedin = true)).pipe(tap(user => this._user = user));
   }
-  register(param?: UserModel){
-    if (param){
+
+  register(param?: UserModel) {
+    if (param) {
       this._user = new UserModel({
         id: 4,
         ...param
       });
+
       this._allUsers = [
         ...this._allUsers,
         this._user
@@ -39,21 +45,26 @@ export class UserService {
     console.log('be vagyunk-e lepve:', this.isLoggedin);
   }
 
-  logout(){
+  logout() {
     this._user = new UserModel();
     this.isLoggedin = false;
     this._router.navigate(['/home']);
+    console.log('be vagyunk-e lepve:', this.isLoggedin);
   }
+
   updateUser(param: UserModel) {
     this._user = new UserModel(param);
   }
-  getUserById(id: number){
+
+  getUserById(id: number) {
     const user = this._allUsers.filter(u => u.id === +id);
     return user.length > 0 ? user[0] : new UserModel(UserModel.emptyUser);
   }
-  getCurrentUser(){
-    return this._user;
-}
+
+  getCurrentUser() {
+    return this._user ? this._user : new UserModel(UserModel.emptyUser);
+  }
+
   private _getMockData() {
     return [
       new UserModel({
@@ -94,4 +105,5 @@ export class UserService {
       }),
     ];
   }
+
 }
