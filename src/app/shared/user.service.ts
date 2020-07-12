@@ -6,7 +6,8 @@ import {FirebaseLoginModel} from './firebase-login-model';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import { switchMap } from 'rxjs/operators';
-import {tap} from "rxjs/internal/operators";
+import { tap, map, filter } from 'rxjs/operators';
+import 'rxjs/add/operator/do';
 @Injectable()
 export class UserService {
   isLoggedin = false;
@@ -20,13 +21,14 @@ export class UserService {
 
   login(email: string, password: string): Observable<UserModel> {
     return this._http.post<FirebaseLoginModel>(
-      `${environment.firebase.loginUrl}?key=${environment.firebase.apikey}`,
+      `${environment.firebase.loginUrl}=${environment.firebase.apikey}`,
       {
         'email': email,
         'password': password,
         'returnSecureToken': true
       })
-      .pipe(switchMap(fbLogin => this._http.get<UserModel>(`${environment.firebase.baseUrl}/users/${fbLogin.localId}.json`))).pipe(tap(user => this.isLoggedin = true)).pipe(tap(user => this._user = user));
+      .pipe(switchMap(fbLogin => this._http.get<UserModel>(`${environment.firebase.baseUrl}/users/${fbLogin.localId}.json`))).do(user => this.isLoggedin = true).do(user => this._user = user );
+
   }
 
   register(param?: UserModel) {
