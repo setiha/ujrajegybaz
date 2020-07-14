@@ -4,8 +4,9 @@ import {HttpClient} from '@angular/common/http';
 import {$} from "protractor";
 import {environment} from "../../environments/environment";
 import {Observable} from "rxjs/index";
-import {map} from "rxjs/internal/operators";
-
+import {map} from 'rxjs/internal/operators';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/switchMap';
 
 @Injectable({
   providedIn: 'root'
@@ -19,36 +20,36 @@ export class EventService {
     return this._http.get(`${environment.firebase.baseUrl}/events.json`).pipe(map(data => Object.keys(data).map(key => data[key])));
   }
 
-  getEventById(id: number) {
+  getEventById(id: string) {
     return this._http.get<EventModel>(`${environment.firebase.baseUrl}/events/${id}.json`);
-   /* const ev = this._events.filter(x => x.id === +id);
-    return ev.length > 0 ? ev[0] : new EventModel(EventModel.emptyEvent);*/
+    /* const ev = this._events.filter(x => x.id === +id);
+     return ev.length > 0 ? ev[0] : new EventModel(EventModel.emptyEvent);*/
   }
 
-  update(param: EventModel) {
-    /*this._events = this._events.map(ev => {
-      if (ev.id === param.id) {
-        return {...param};
-      } else {
-
-        return ev;
-      }
-    });*/
-
+  save(param: EventModel) {
+    console.log(param);
+    if (param.id) {//update ag
+      return this._http.put(`${environment.firebase.baseUrl}/events/${param.id}.json`, param);
+    } else { //create ag
+      return this._http.post(`${environment.firebase.baseUrl}/events.json`, param)
+        .map((fbPostReturn: { name: string }) => fbPostReturn.name)
+        .switchMap(fbId => this._http.patch(
+          `${environment.firebase.baseUrl}/events/${fbId}.json`,
+          {id: fbId}
+        ));
+    }
   }
 
-  create(param: EventModel) {
-   /* //noinspection TypeScriptValidateTypes
-    this._events = [
-      ...this._events,
-      {
-        id: this._getMaxId() + 1,
-        ...param
-      }
-    ];*/
+  delete(param: EventModel) {
+    return this._http.delete(`${environment.firebase.baseUrl}/events/${param.id}.json`);
   }
 
-  private _getMaxId() {
-   /* return this._events.reduce((x, y) => x.id > y.id ? x : y).id;*/
+  addTicket(eventId: string, ticketId: string): Observable<string> {
+    return this._http.patch(
+      `${environment.firebase.baseUrl}/events/${eventId}/tickets.json`,
+      {[ticketId]: true}
+    )
+      .map(rel => Object.keys(rel)[0]);
   }
 }
+

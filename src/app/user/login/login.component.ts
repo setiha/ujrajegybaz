@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {UserService} from '../../shared/user.service';
-import {Router} from "@angular/router";
-import {UserModel} from '../../shared/user-model'
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserModel } from '../../shared/user-model';
+import { UserService } from '../../shared/user.service';
 
 @Component({
   selector: 'app-login',
@@ -11,20 +11,24 @@ import {UserModel} from '../../shared/user-model'
 export class LoginComponent implements OnInit {
   public error: string;
 
-  constructor(private _userService: UserService, private _router: Router) {
+  constructor(private _userService: UserService,
+              private _router: Router) {
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
   }
 
-  login(email: string, password: string){
-    this._userService.login(email, password).subscribe((user: UserModel) => {console.log('login cmp', user);
-    this._router.navigate(['/user']);
-    },
-      err => console.warn('hibara futottunk a logincmp -ben', err));
+  login(email: string, password: string) {
+    this._userService.login(email, password).subscribe(
+      (user: UserModel) => {
+        this._router.navigate(['/user']);
+      },
+      err => console.warn('hibara futottunk a logincmp-ben', err)
+    );
   }
 
   clearError() {
     delete(this.error);
   }
+
 }

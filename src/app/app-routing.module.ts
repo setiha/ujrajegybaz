@@ -6,7 +6,6 @@ import {EventComponent} from './event/event.component';
 import {TicketComponent} from './ticket/ticket.component';
 import {AboutComponent} from './about/about.component';
 import {LoginComponent} from './user/login/login.component';
-import {RegisterComponent} from './user/register/register.component';
 import {EventListComponent} from './event/event-list/event-list.component';
 import {EventDetailComponent} from './event/event-detail/event-detail.component';
 import {ProfileComponent} from './user/profile/profile.component';
@@ -32,7 +31,7 @@ const routes: Routes = [
     children: [
       {path: '', component: TicketListComponent},
       {path: 'new', component: TicketDetailComponent, canActivate: [LoggedInGuard]},
-      {path: ':id/bid', component: BidComponent, canActivate: [LoggedInGuard]}
+      {path: ':id/bid', component: BidComponent },
     ]
   },
   {path: 'about', component: AboutComponent},

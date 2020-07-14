@@ -22,7 +22,7 @@ export class EventListComponent implements OnInit {
 
   ngOnInit(): void {
 this.eventsGrouppedBy3$ = this._eventService.getAllEvents().pipe(map(data => {
-  return data.reduce((acc, curr: EventModel, ind: number) => {
+  return data.reduce((acc: Array<any> , curr: EventModel, ind: number) => {
     if (ind % 3 === 0){
       acc.push([]);
     }
