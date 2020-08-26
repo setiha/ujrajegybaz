@@ -27,7 +27,6 @@ export class EventService {
   }
 
   save(param: EventModel) {
-    console.log(param);
     if (param.id) {//update ag
       return this._http.put(`${environment.firebase.baseUrl}/events/${param.id}.json`, param);
     } else { //create ag

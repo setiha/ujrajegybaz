@@ -27,7 +27,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     const evId = this._route.snapshot.params['id'];
-
+console.log(evId);
     // ez egy megoldas arra, hogy egyben kezeljuk az edit es create funkcionalitast
     // illetve edit esetben is van mivel dolgozni amig megerkezik az adat igy user mindig lat valamit
     this.event = new EventModel();
