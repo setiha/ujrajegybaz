@@ -1,9 +1,9 @@
 <div class="row">
   <div class="col-sm order-md-2">
-    <ng-container ngIf="ticket"><!--a megjelenitest megvedtuk es a hibatol megszabadultunk
+    <ng-container *ngIf="ticket"><!--a megjelenitest megvedtuk es a hibatol megszabadultunk
      ugyanis a html hamarab legeneralodik mint az ng oninit es nincs event es ticket
      az ng container addig nem jelenik meg mig a ticketben nincs ertek-->
-    <app-eventcard [esemeny]="ticket.event"></app-eventcard>
+    <app-eventcard [esemeny]="ticket.event" nextLabel="Esemeny megtekintese"></app-eventcard>
     </ng-container>
   </div>
   <div clASS="col-sm-12 col-md-8">
