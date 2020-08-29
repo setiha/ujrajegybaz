@@ -34,7 +34,7 @@
   <tbody>
   <tr *ngFor="let ticket of tickets$ | async">
     <td scope="row">
-      <a [routerLink]="['/event', ticket.eventId]">
+      <a [routerLink]="['/event', ticket.eventId, 'edit']">
         {{ ticket.event.name }}
       </a>
     </td>

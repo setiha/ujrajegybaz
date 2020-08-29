@@ -7,9 +7,9 @@ export class TicketModel {
   minimalBidPrice: number;
   bidStep: number;
   eventId: string;
-  event?: EventModel;
+  event: EventModel;
   sellerUserId: string;
-  seller?: UserModel;
+  seller: UserModel;
 
 
   constructor(param?: TicketModel) {

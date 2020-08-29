@@ -3,7 +3,7 @@ import {Injectable} from "@angular/core";
 import "rxjs/add/observable/forkJoin";
 import "rxjs/add/observable/zip";
 import "rxjs/add/operator/mergeMap";
-import {Observable} from 'rxjs/Rx'
+import {Observable} from "rxjs/Rx";
 import {environment} from "../../environments/environment";
 import {EventModel} from "./event-model";
 import {EventService} from "./event.service";
