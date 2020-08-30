@@ -18,6 +18,7 @@ import {LoggedInGuard} from './shared/logged-in.guard';
 import {FormsModule} from '@angular/forms';
 import {AuthInterceptor} from './shared/auth-interceptor';
 import { TicketDetailsCardComponent } from './ticket/ticket-details-card/ticket-details-card.component';
+import { BiddingCardComponent } from './ticket/bidding-card/bidding-card.component';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { TicketDetailsCardComponent } from './ticket/ticket-details-card/ticket-
     ...AppRoutingModule.routableComponent,
     EventListComponent,
     TicketDetailsCardComponent,
+    BiddingCardComponent,
   ],
   imports: [
     BrowserModule,
