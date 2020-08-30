@@ -17,6 +17,7 @@ import {TicketService} from './shared/ticket.service';
 import {LoggedInGuard} from './shared/logged-in.guard';
 import {FormsModule} from '@angular/forms';
 import {AuthInterceptor} from './shared/auth-interceptor';
+import { TicketDetailsCardComponent } from './ticket/ticket-details-card/ticket-details-card.component';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import {AuthInterceptor} from './shared/auth-interceptor';
     NavbarComponent,
     ...AppRoutingModule.routableComponent,
     EventListComponent,
+    TicketDetailsCardComponent,
   ],
   imports: [
     BrowserModule,
