@@ -32,10 +32,10 @@
           <input type="date" class="form-control mb-3" id="idopont"
                  placeholder="időpont"
                  required
-                 [(ngModel)]="ticket.date" name="date"
-                 #date="ngModel"
+                 [(ngModel)]="ticket.bidEndDate" name="bidEndDate"
+                 #bidEndDate="ngModel"
           >
-          <alert type="danger" *ngIf="date.touched && date.invalid">Kötelező mező!
+          <alert type="danger" *ngIf="bidEndDate.touched && bidEndDate.invalid">Kötelező mező!
           </alert>
         </div>
 
