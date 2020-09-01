@@ -21,7 +21,7 @@
         <td>{{ticket.bidStep }} Ft</td>
       </tr>
       <tr>
-        <td colspan="2">Licit lejar <strong>X</strong> nap mulva</td>
+        <td colspan="2">Licit lejar <strong>{{ticket.bidEndDate | amFromUnix | amTimeAgo}}</strong></td>
       </tr>
       </tbody>
     </table>
