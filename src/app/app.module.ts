@@ -20,7 +20,8 @@ import {AuthInterceptor} from './shared/auth-interceptor';
 import { TicketDetailsCardComponent } from './ticket/ticket-details-card/ticket-details-card.component';
 import { BiddingCardComponent } from './ticket/bidding-card/bidding-card.component';
 import {MomentModule} from "angular2-moment";
-import 'moment/locale/hu' ;
+import 'moment/locale/hu';
+import { BidFormComponent } from './ticket/bid-form/bid-form.component' ;
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import 'moment/locale/hu' ;
     EventListComponent,
     TicketDetailsCardComponent,
     BiddingCardComponent,
+    BidFormComponent,
   ],
   imports: [
     BrowserModule,
