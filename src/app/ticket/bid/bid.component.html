@@ -1,15 +1,15 @@
-<div class="row">
-
-  <ng-container *ngIf="ticket"><!--a megjelenitest megvedtuk es a hibatol megszabadultunk
+<div class="container">
+  <div class="row">
+    <ng-container *ngIf="ticket"><!--a megjelenitest megvedtuk es a hibatol megszabadultunk
      ugyanis a html hamarab legeneralodik mint az ng oninit es nincs event es ticket
      az ng container addig nem jelenik meg mig a ticketben nincs ertek-->
-    <div class="col-sm order-md-2">
-      <app-eventcard [esemeny]="ticket.event" nextLabel="Esemeny megtekintese"></app-eventcard>
-    </div>
-    <div class="col-sm-12 col-md-8">
-      <app-ticket-details-card [ticket]="ticket"></app-ticket-details-card>
-      <app-bidding-card [ticket]="ticket"></app-bidding-card>
-    </div>
-  </ng-container>
+      <div class="col-sm order-md-2">
+        <app-eventcard [esemeny]="ticket.event" nextLabel="Esemeny megtekintese"></app-eventcard>
+      </div>
+      <div class="col-sm-12 col-md-8">
+        <app-ticket-details-card [ticket]="ticket"></app-ticket-details-card>
+        <app-bidding-card [ticket]="ticket"></app-bidding-card>
+      </div>
+    </ng-container>
+  </div>
 </div>
-
