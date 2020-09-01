@@ -19,6 +19,7 @@ import {FormsModule} from '@angular/forms';
 import {AuthInterceptor} from './shared/auth-interceptor';
 import { TicketDetailsCardComponent } from './ticket/ticket-details-card/ticket-details-card.component';
 import { BiddingCardComponent } from './ticket/bidding-card/bidding-card.component';
+import {MomentModule} from "angular2-moment";
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { BiddingCardComponent } from './ticket/bidding-card/bidding-card.compone
     AppRoutingModule,
     CollapseModule.forRoot(),
     AlertModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
+    MomentModule
   ],
   providers: [EventService, UserService, TicketService, LoggedInGuard,
 {
