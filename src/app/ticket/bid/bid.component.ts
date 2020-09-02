@@ -18,7 +18,7 @@ export class BidComponent implements OnInit {
               userService: UserService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.isLoggedIn = userService.isLoggedin;
+              this.isLoggedIn = userService.isLoggedin;
   }
 
   ngOnInit(): void {
