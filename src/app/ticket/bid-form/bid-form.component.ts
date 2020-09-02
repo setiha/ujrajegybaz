@@ -8,7 +8,7 @@ import {TicketModel} from "../../shared/ticket-model";
 })
 export class BidFormComponent {
   @Input() ticket: TicketModel;
-  @Output bidWithBidStep = new EventEmitter<void>();
+  @Output() bidWithBidStep = new EventEmitter<void>();
 
   onBidWithBidStep() {
     this.bidWithBidStep.emit();

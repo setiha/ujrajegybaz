@@ -8,6 +8,7 @@ import {TicketModel} from "../../shared/ticket-model";
 })
 export class BiddingCardComponent {
   @Input() ticket: TicketModel;
+  @Input() isLoggedIn: boolean;
 
   onBidWithBidStep(){
     alert('Megnyomtak a gombot');
