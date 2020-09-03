@@ -15,7 +15,7 @@ import {UserService} from './shared/user.service';
 import {AlertModule} from 'ngx-bootstrap/alert';
 import {TicketService} from './shared/ticket.service';
 import {LoggedInGuard} from './shared/logged-in.guard';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AuthInterceptor} from './shared/auth-interceptor';
 import { TicketDetailsCardComponent } from './ticket/ticket-details-card/ticket-details-card.component';
 import { BiddingCardComponent } from './ticket/bidding-card/bidding-card.component';
@@ -41,6 +41,7 @@ import { LoadingSpinnerComponent } from './core/loading-spinner/loading-spinner.
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     CollapseModule.forRoot(),
