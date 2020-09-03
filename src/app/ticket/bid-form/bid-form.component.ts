@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {TicketModel} from "../../shared/ticket-model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {bidMinimumValidator} from "./bid.validators";
 
 @Component({
   selector: 'app-bid-form',
@@ -18,21 +19,38 @@ export class BidFormComponent implements OnInit {
   constructor(private fb: FormBuilder) {
 
   }
+
   ngOnInit(): void {
     this.form = this.fb.group(
       {
-        bid: [null, Validators.required]
+        /*bid: null, //sima verzio
+         bid: [null, Validators.required], //egy validator csak*/
+        bid: [
+          null, Validators.compose
+          (
+            [
+              Validators.required,
+              bidMinimumValidator
+              (
+                this.ticket.currentBid + this.ticket.bidStep
+              )
+            ]
+          )
+        ] //tobb validator
       }
     );
   }
+
   onBidWithBidStep() {
     this.bidWithBidStep.emit();
   }
-  displayBidWithStep($event: Event){
+
+  displayBidWithStep($event: Event) {
     $event.preventDefault();
     this.displayBidStep = false;
   }
-  onSubmit(){
+
+  onSubmit() {
     this.submitted = true;
     console.log('Licitaltak');
     console.log(this.form.value);
