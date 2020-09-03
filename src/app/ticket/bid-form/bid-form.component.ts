@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {TicketModel} from "../../shared/ticket-model";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-bid-form',
@@ -13,6 +13,7 @@ export class BidFormComponent implements OnInit {
   @Output() bidWithBidStep = new EventEmitter<void>();
   displayBidStep = true;
   form: FormGroup;
+  submitted = false;
 
   constructor(private fb: FormBuilder) {
 
@@ -20,7 +21,7 @@ export class BidFormComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.fb.group(
       {
-        bid: null
+        bid: [null, Validators.required]
       }
     );
   }
@@ -32,7 +33,10 @@ export class BidFormComponent implements OnInit {
     this.displayBidStep = false;
   }
   onSubmit(){
+    this.submitted = true;
     console.log('Licitaltak');
+    console.log(this.form.value);
+    console.log(this.form.valid);
   }
 }
 
