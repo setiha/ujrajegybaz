@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {TicketModel} from "../../shared/ticket-model";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {bidMinimumValidator} from "./bid.validators";
 
 @Component({
@@ -39,8 +39,12 @@ export class BidFormComponent implements OnInit {
         ] //tobb validator
       }
     );
+    this.form.get('bid').valueChanges.subscribe(val => console.log('bid change', val));
+    this.form.valueChanges.subscribe(val => console.log('form change', val));
   }
-
+  testMethod(){
+    this.form.addControl('bid2', new FormControl());
+  }
   onBidWithBidStep() {
     this.bidWithBidStep.emit();
   }
