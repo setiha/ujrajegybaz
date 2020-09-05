@@ -23,6 +23,8 @@ import {MomentModule} from "angular2-moment";
 import 'moment/locale/hu';
 import { BidFormComponent } from './ticket/bid-form/bid-form.component';
 import { LoadingSpinnerComponent } from './core/loading-spinner/loading-spinner.component' ;
+import {BidService} from "./shared/bid.service";
+
 
 @NgModule({
   declarations: [
@@ -49,7 +51,7 @@ import { LoadingSpinnerComponent } from './core/loading-spinner/loading-spinner.
     HttpClientModule,
     MomentModule
   ],
-  providers: [EventService, UserService, TicketService, LoggedInGuard,
+  providers: [EventService, UserService, TicketService, LoggedInGuard, BidService,
 {
   provide: HTTP_INTERCEPTORS,
     useClass:  AuthInterceptor,
