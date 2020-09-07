@@ -16,6 +16,8 @@ export class BidFormComponent implements OnInit {
   displayBidStep = true;
   form: FormGroup;
   submitted = false;
+  submitSuccessAlert = false;
+  submitErrorAlert = false;
 
   constructor(private fb: FormBuilder,
               private bidService: BidService
@@ -53,17 +55,21 @@ export class BidFormComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    this.submitSuccessAlert = false;
+    this.submitErrorAlert = false;
+    
     if (this.form.valid){
      this.bidService.bid(this.ticket.id, this.form.value.bid)
        .subscribe({
          next: () => {
            this.submitted = false;
            this.form.reset({bid: null});
-           // TODO notification user
+           this.submitSuccessAlert = true;
            // TODO emit output bid
          },
          error: err => {
            console.error(err);
+           this.submitErrorAlert = true;
          }
        });
     }
