@@ -1,20 +1,20 @@
-
+<alert type="success" dismissOnTimeout="5000" *ngIf="submitSuccessAlert">
+  Licitedet rogzitettuk
+</alert>
+<alert type="danger" *ngIf="submitErrorAlert">
+  Valami hiba tortent... Probald meg ujra, vagy jelezd a supportnak
+</alert>
 <div class="row" *ngIf="displayBidStep; else bidWithValue">
   <div class="col-12">
-    <a class="btn btn-primary text-light" (click)="onBidWithBidStep()">Licit a kovetkezo legkisebb licittel :
-      {{ticket.currentBid+ticket.bidStep}} Ft</a>
+    <button [disabled]="disabled" class="btn btn-primary text-light" (click)="onBidWithBidStep()">Licit a kovetkezo legkisebb licittel :
+      {{ticket.currentBid+ticket.bidStep}} Ft</button>
   </div>
   <div class="col-12">
-    <a href="#" (click)="displayBidWithStep($event)">Inkabb megadom en a licit erteket</a>
+    <a href="#" (click)="displayBidWithStep($event)" [ngClass]="{'disabled':disabled}">Inkabb megadom en a licit erteket</a>
   </div>
 </div>
 <ng-template #bidWithValue>
- <alert type="success" dismissionOnTimeout="5000" *ngIf="submitSuccessAlert">
-   Licitedet rogzitettuk
- </alert>
-  <alert type="danger" *ngIf="submitErrorAlert">
-    Valami hiba tortent... Probald meg ujra, vagy jelezd a supportnak
-  </alert>
+
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="row">
       <div class="col-6">
@@ -24,6 +24,7 @@
           type="number"
           class="form-control"
           placeholder="Add meg a licit ertekedet">
+
         <div class="invalid-feedback" *ngIf="form.get('bid').hasError('required')">
           Kotelezo licit erteket megadni!</div>
         <div class="invalid-feedback" *ngIf="form.get('bid').hasError('validateMinimumBid')">
@@ -31,7 +32,7 @@
       </div>
 
       <div class="col-6">
-        <button type="submit" class="btn btn-primary text-light" role="button">Licitalok</button>
+        <button type="submit" class="btn btn-primary text-light" role="button" [disabled]="disabled">Licitalok</button>
       </div>
     </div>
   </form>
