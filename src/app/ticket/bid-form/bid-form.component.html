@@ -6,11 +6,22 @@
 </alert>
 <div class="row" *ngIf="displayBidStep; else bidWithValue">
   <div class="col-12">
-    <button [disabled]="disabled" class="btn btn-primary text-light" (click)="onBidWithBidStep()">Licit a kovetkezo legkisebb licittel :
-      {{ticket.currentBid+ticket.bidStep}} Ft</button>
+    <div class="row">
+      <div class="col">
+        <button [disabled]="disabled" class="btn btn-primary text-light" (click)="onBidWithBidStep()">Licit a kovetkezo
+          legkisebb licittel :
+          {{ticket.currentBid+ticket.bidStep}} Ft
+        </button>
+      </div>
+      <div class="col" *ngIf="disabled">
+        <app-loading-spinner [loaderWidth]="35" [loaderHeight]="35"></app-loading-spinner>
+      </div>
+    </div>
+
   </div>
   <div class="col-12">
-    <a href="#" (click)="displayBidWithStep($event)" [ngClass]="{'disabled':disabled}">Inkabb megadom en a licit erteket</a>
+    <a href="#" (click)="displayBidWithStep($event)" [ngClass]="{'disabled':disabled}">Inkabb megadom en a licit
+      erteket</a>
   </div>
 </div>
 <ng-template #bidWithValue>
@@ -28,14 +39,17 @@
         <div class="invalid-feedback" *ngIf="form.get('bid').hasError('required')">
           Kotelezo licit erteket megadni!</div>
         <div class="invalid-feedback" *ngIf="form.get('bid').hasError('validateMinimumBid')">
-          Minimum licit amit tehetsz: {{ticket.currentBid + ticket.bidStep}} Ft.</div>
+          Minimum licit amit tehetsz: {{ticket.currentBid + ticket.bidStep}} Ft.
+        </div>
       </div>
 
       <div class="col-6">
-        <button type="submit" class="btn btn-primary text-light" role="button" [disabled]="disabled">Licitalok</button>
+        <button *ngIf="!disabled; else loadingSubmit" type="submit" class="btn btn-primary text-light" role="button">Licitalok
+        </button>
+        <ng-template #loadingSubmit>
+          <app-loading-spinner [loaderWidth]="30" [loaderHeight]="30"></app-loading-spinner>
+        </ng-template>
       </div>
     </div>
   </form>
 </ng-template>
-{{form.value | json}}
-{{form.get('bid').errors | json}}
