@@ -10,7 +10,7 @@ export class BiddingCardComponent {
   @Input() ticket: TicketModel;
   @Input() isLoggedIn: boolean;
   @Output() refreshTicket = new EventEmitter<void>();
-
+@Input() loading = false;
   onBidWithBidStep() {
     this.refreshTicket.emit();
   }

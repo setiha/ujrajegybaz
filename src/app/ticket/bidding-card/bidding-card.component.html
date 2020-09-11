@@ -1,6 +1,9 @@
 <div class="card mt-2">
   <div class="card-body">
-    <h4 class="card-title">Licit adatok</h4>
+    <h4 class="card-title">Licit adatok
+      <app-loading-spinner class="float-right" [loaderWidth]="20" [loaderHeight]="25" *ngIf="loading">
+      </app-loading-spinner>
+    </h4>
 
     <table class="table table-responsive">
       <tbody>
@@ -25,6 +28,6 @@
       </tr>
       </tbody>
     </table>
-    <app-bid-form *ngIf="isLoggedIn" [ticket] = "ticket" (bid)="onBidWithBidStep()"></app-bid-form>
+    <app-bid-form *ngIf="isLoggedIn" [ticket]="ticket" (bid)="onBidWithBidStep()"></app-bid-form>
   </div>
 </div>
