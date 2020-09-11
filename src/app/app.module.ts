@@ -24,6 +24,7 @@ import 'moment/locale/hu';
 import { BidFormComponent } from './ticket/bid-form/bid-form.component';
 import { LoadingSpinnerComponent } from './core/loading-spinner/loading-spinner.component' ;
 import {BidService} from "./shared/bid.service";
+import * as firebase from "firebase";
 
 
 @NgModule({
@@ -61,4 +62,7 @@ import {BidService} from "./shared/bid.service";
 bootstrap: [AppComponent]
 })
 export class AppModule {
+  constructor(){
+    firebase.initializeApp();
+  }
 }
