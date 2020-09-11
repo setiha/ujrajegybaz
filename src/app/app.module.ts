@@ -16,16 +16,15 @@ import {AlertModule} from 'ngx-bootstrap/alert';
 import {TicketService} from './shared/ticket.service';
 import {LoggedInGuard} from './shared/logged-in.guard';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {AuthInterceptor} from './shared/auth-interceptor';
 import { TicketDetailsCardComponent } from './ticket/ticket-details-card/ticket-details-card.component';
 import { BiddingCardComponent } from './ticket/bidding-card/bidding-card.component';
-import {MomentModule} from "angular2-moment";
+import {MomentModule} from 'angular2-moment';
 import 'moment/locale/hu';
 import { BidFormComponent } from './ticket/bid-form/bid-form.component';
 import { LoadingSpinnerComponent } from './core/loading-spinner/loading-spinner.component' ;
-import {BidService} from "./shared/bid.service";
-import * as firebase from "firebase";
-import {environment} from "../environments/environment";
+import {BidService} from './shared/bid.service';
+import * as firebase from 'firebase';
+import {environment} from '../environments/environment';
 
 
 @NgModule({
@@ -53,12 +52,7 @@ import {environment} from "../environments/environment";
     HttpClientModule,
     MomentModule
   ],
-  providers: [EventService, UserService, TicketService, LoggedInGuard, BidService,
-{
-  provide: HTTP_INTERCEPTORS,
-    useClass:  AuthInterceptor,
-    multi: true,
-}
+  providers: [EventService, UserService, TicketService, LoggedInGuard, BidService
 ],
 bootstrap: [AppComponent]
 })
