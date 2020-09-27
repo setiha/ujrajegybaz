@@ -26,6 +26,15 @@ export class TicketModel {
     Object.defineProperty(this, 'event', eventPropertyDescriptor);
     return this;
   }
+
+  setSeller(seller: UserModel){
+    delete this.seller;
+    this.seller = seller;
+    const sellerPropertyDescriptor = Object.getOwnPropertyDescriptor(this, 'event');
+    sellerPropertyDescriptor.enumerable = false;
+    Object.defineProperty(this, 'seller', sellerPropertyDescriptor);
+    return this;
+  }
 }
 
 
