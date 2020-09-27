@@ -17,4 +17,5 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     this.user$ = this._userService.getCurrentUser();
   }
+
 }

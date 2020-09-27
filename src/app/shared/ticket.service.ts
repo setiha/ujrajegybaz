@@ -79,6 +79,7 @@ export class TicketService {
       // keszitsuk kicsit elo a jovilagot es vezessuk a profilunknal a hozzank tartozo ticketeket
       .switchMap(ticketId => this._userService.addTicket(ticketId))
       ;
+
   }
 
   private _saveGeneratedId(ticketId: string): Observable<string> {
@@ -89,13 +90,14 @@ export class TicketService {
       .map(x => x.id);
   }
 
-  getOne(id: string): Observable<TicketModel> {
+  getOne(id: string): Observable<any> {
     return this._http.get<TicketModel>(`${environment.firebase.baseUrl}/tickets/${id}.json`).flatMap(
       ticket => Observable.combineLatest(
         Observable.of(new TicketModel(ticket)),
         this._eventService.getEventById(ticket.eventId),
         this._userService.getUserById(ticket.sellerUserId),
         (t: TicketModel, e: EventModel, u: UserModel) => {
+          t.setEvent(e);
           return {
             ...t,
             event: e,

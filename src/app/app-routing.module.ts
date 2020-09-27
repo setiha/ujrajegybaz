@@ -23,7 +23,7 @@ const routes: Routes = [
     children: [
       {path: 'list', component: EventListComponent},
       {path: 'new', component: EventDetailComponent, canActivate: [LoggedInGuard]},
-      {path: ':id', component: EventDetailComponent}
+      {path: ':localId', component: EventDetailComponent}
     ]
   },
   {
