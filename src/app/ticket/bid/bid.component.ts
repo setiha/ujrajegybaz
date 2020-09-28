@@ -1,19 +1,21 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnDestroy, OnInit} from "@angular/core";
 import {TicketService} from "../../shared/ticket.service";
 import {TicketModel} from "../../shared/ticket-model";
 import {UserService} from "../../shared/user.service";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
-import {Observable} from "rxjs/Rx";
+import {Observable, Subscription} from "rxjs/Rx";
 
 @Component({
   selector: 'app-bid',
   templateUrl: './bid.component.html',
   styleUrls: ['./bid.component.css']
 })
-export class BidComponent implements OnInit {
+export class BidComponent implements OnInit, OnDestroy {
+
   ticket$: Observable<TicketModel>;
   isLoggedIn$: Observable<boolean>;
   progressRefreshTicket = false;
+  private ticketWatcherSubscription: Subscription;
 
   constructor(private ticketService: TicketService,
               userService: UserService,
@@ -21,7 +23,9 @@ export class BidComponent implements OnInit {
               private router: Router) {
     this.isLoggedIn$ = userService.isLoggedIn$;
   }
-
+  ngOnDestroy(): void {
+    this.ticketWatcherSubscription.unsubscribe();
+  }
   ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.refreshTicket(params.get('id'));
@@ -34,7 +38,7 @@ export class BidComponent implements OnInit {
       this.router.navigate(['404']);
     }
     this.ticket$ = this.ticketService.getOne(id).share();
-    this.ticket$.subscribe({
+    this.ticketWatcherSubscription = this.ticket$.subscribe({
       next: ticket => {
         this.progressRefreshTicket = false;
         if (ticket === null) {

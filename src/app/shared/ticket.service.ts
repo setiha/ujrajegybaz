@@ -14,6 +14,7 @@ import "rxjs/add/observable/of";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/switchMap";
 import * as firebase from "firebase";
+import "rxjs-compat/add/operator/first";
 
 
 @Injectable()
@@ -89,6 +90,10 @@ export class TicketService {
       {id: ticketId}
     )
       .map(x => x.id);
+  }
+
+  getOneOnce(id: string): Observable<TicketModel> {
+    return this.getOne(id).first();
   }
 
   getOne(id: string): Observable<any> {
