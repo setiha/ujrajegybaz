@@ -1,17 +1,13 @@
-<ng-container *ngIf="ticket !=null; else loading">
+<ng-container *ngIf="(ticket$ | async) as ticket; else loading">
   <div class="container">
     <div class="row">
-      <ng-container *ngIf="ticket"><!--a megjelenitest megvedtuk es a hibatol megszabadultunk
-     ugyanis a html hamarab legeneralodik mint az ng oninit es nincs event es ticket
-     az ng container addig nem jelenik meg mig a ticketben nincs ertek-->
         <div class="col-sm order-md-2">
           <app-eventcard [esemeny]="ticket.event" nextLabel="Esemeny megtekintese"></app-eventcard>
         </div>
-        <div class="col-sm-12 col-md-8">
+      <div class="col-sm-12 col-md-8">
           <app-ticket-details-card [ticket]="ticket" [loading]="progressRefreshTicket"></app-ticket-details-card>
-          <app-bidding-card [loading]="progressRefreshTicket" [ticket]="ticket" [isLoggedIn]="isLoggedIn$ | async" (refreshTicket)="onRefreshTicket()"></app-bidding-card>
+          <app-bidding-card [loading]="progressRefreshTicket" [ticket]="ticket" [isLoggedIn]="isLoggedIn$ | async"></app-bidding-card>
         </div>
-      </ng-container>
     </div>
   </div>
 </ng-container>

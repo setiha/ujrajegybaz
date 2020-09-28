@@ -13,6 +13,7 @@ import {UserService} from "./user.service";
 import "rxjs/add/observable/of";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/switchMap";
+import * as firebase from "firebase";
 
 
 @Injectable()
@@ -91,15 +92,26 @@ export class TicketService {
   }
 
   getOne(id: string): Observable<any> {
-    return this._http.get<TicketModel>(`${environment.firebase.baseUrl}/tickets/${id}.json`).flatMap(
-      ticket => Observable.combineLatest(
-        Observable.of(new TicketModel(ticket)),
-        this._eventService.getEventById(ticket.eventId),
-        this._userService.getUserById(ticket.sellerUserId),
-        (t: TicketModel, e: EventModel, u: UserModel) => {
-          return t.setEvent(e).setSeller(u);
-        }
-      )
+    return new Observable(
+      observer => {
+        const dbTicket = firebase.database().ref(`tickets/${id}`);
+        dbTicket.on('value', snapshot => {
+          const ticket = snapshot.val();
+
+          const subscription = Observable.combineLatest(
+            Observable.of(new TicketModel(ticket)),
+            this._eventService.getEventById(ticket.eventId),
+            this._userService.getUserById(ticket.sellerUserId),
+            (t: TicketModel, e: EventModel, u: UserModel) => {
+              return t.setEvent(e).setSeller(u);
+            }).subscribe(
+            ticketModel => {
+              observer.next(ticketModel);
+              subscription.unsubscribe();
+            }
+          );
+        });
+      }
     );
   }
 

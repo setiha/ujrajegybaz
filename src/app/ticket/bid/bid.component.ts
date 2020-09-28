@@ -11,7 +11,7 @@ import {Observable} from "rxjs/Rx";
   styleUrls: ['./bid.component.css']
 })
 export class BidComponent implements OnInit {
-  ticket: TicketModel;
+  ticket$: Observable<TicketModel>;
   isLoggedIn$: Observable<boolean>;
   progressRefreshTicket = false;
 
@@ -19,7 +19,7 @@ export class BidComponent implements OnInit {
               userService: UserService,
               private route: ActivatedRoute,
               private router: Router) {
- this.isLoggedIn$ = userService.isLoggedIn$;
+    this.isLoggedIn$ = userService.isLoggedIn$;
   }
 
   ngOnInit(): void {
@@ -33,22 +33,17 @@ export class BidComponent implements OnInit {
     const handle404 = () => {
       this.router.navigate(['404']);
     }
-    this.ticketService.getOne(id).subscribe({
+    this.ticket$ = this.ticketService.getOne(id).share();
+    this.ticket$.subscribe({
       next: ticket => {
         this.progressRefreshTicket = false;
         if (ticket === null) {
           handle404();
-        } else {
-          this.ticket = ticket;
         }
       },
       error: err => {
         return handle404();
       }
     });
-  }
-
-  onRefreshTicket() {
-this.refreshTicket(this.ticket.id);
   }
 }
