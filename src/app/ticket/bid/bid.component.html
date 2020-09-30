@@ -6,7 +6,7 @@
         </div>
       <div class="col-sm-12 col-md-8">
           <app-ticket-details-card [ticket]="ticket" [loading]="progressRefreshTicket"></app-ticket-details-card>
-          <app-bidding-card [loading]="progressRefreshTicket" [ticket]="ticket" [isLoggedIn]="isLoggedIn$ | async"></app-bidding-card>
+          <app-bidding-card (bid) = "onBid()"[ticket]="ticket" [isLoggedIn]="isLoggedIn$ | async"></app-bidding-card>
         </div>
     </div>
   </div>

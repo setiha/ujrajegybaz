@@ -50,4 +50,7 @@ export class BidComponent implements OnInit, OnDestroy {
       }
     });
   }
+  onBid() {
+    this.progressRefreshTicket = true;
+  }
 }
