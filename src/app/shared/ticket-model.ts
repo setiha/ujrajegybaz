@@ -30,7 +30,7 @@ export class TicketModel {
   setSeller(seller: UserModel){
     delete this.seller;
     this.seller = seller;
-    const sellerPropertyDescriptor = Object.getOwnPropertyDescriptor(this, 'event');
+    const sellerPropertyDescriptor = Object.getOwnPropertyDescriptor(this, 'seller');
     sellerPropertyDescriptor.enumerable = false;
     Object.defineProperty(this, 'seller', sellerPropertyDescriptor);
     return this;

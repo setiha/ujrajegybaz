@@ -1,23 +1,26 @@
-
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container">
-    <a class="navbar-brand" routerLink = "/home">Jegybazár</a>
-    <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed" data-toggle="collapse" data-target="#navbarNavAltMarkup">
+    <a class="navbar-brand" routerLink="/home">Jegybazár</a>
+    <button class="navbar-toggler" type="button" (click) = "detectHam()" (click)="isCollapsed = !isCollapsed" data-toggle="collapse"
+            data-target="#navbarNavAltMarkup">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup" [collapse] = 'isCollapsed'>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup" [collapse]='isCollapsed'>
       <div class="navbar-nav ml-auto">
-        <a class="nav-item nav-link" routerLinkActive="active" routerLink = "/home">Home</a>
-        <a class="nav-item nav-link" routerLinkActive="active" routerLink = "/event/list" >Események</a>
-        <a class="nav-item nav-link" routerLink = "/ticket" routerLinkActive="active" >Jegyek</a>
-        <a class="nav-item nav-link"  routerLink = "/about" routerLinkActive="active">Rólunk</a>
-        <ng-container *ngIf="!(userService.isLoggedIn$ | async); else loggedInBlock">
-        <a class="nav-item nav-link" routerLink = "/user/login" routerLinkActive="active" >Belépés</a>
-        <a class="nav-item nav-link btn btn-primary text-light ml-lg-2 btn-sm" routerLink = "/user/register" routerLinkActive="active">Regisztráció</a>
+        <app-navbar-item url="home" name ="Home"></app-navbar-item>
+        <app-navbar-item url="event/list" name="Esemenyek"></app-navbar-item>
+        <app-navbar-item url="ticket" name="Jegyek"></app-navbar-item>
+        <app-navbar-item url="about" name="Rólunk"></app-navbar-item>
+
+        <ng-container *ngIf="!isLoggedIn; else loggedInBlock">
+          <app-navbar-item url="/user/login" name="Belepes"></app-navbar-item>
+          <a class="nav-item nav-link btn btn-primary text-light ml-lg-2 btn-sm" routerLink="/user/register"
+             routerLinkActive="active">Regisztráció</a>
         </ng-container>
-       <ng-template #loggedInBlock>
-        <a class="nav-item nav-link" routerLinkActive="active" (click)="logout()" >Logout</a>
-       </ng-template>
+        <ng-template #loggedInBlock>
+          <app-navbar-item url="user" name="Profile"></app-navbar-item>
+          <a class="nav-item nav-link" routerLinkActive="active" (click)="logout()">Logout</a>
+        </ng-template>
       </div>
     </div>
   </div>
