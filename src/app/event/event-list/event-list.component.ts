@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {EventService} from '../../shared/event.service';
 import {EventModel} from '../../shared/event-model';
 import {UserService} from '../../shared/user.service';
@@ -9,7 +9,8 @@ import {map, catchError} from 'rxjs/operators';
 @Component({
   selector: 'app-event-list',
   templateUrl: './event-list.component.html',
-  styleUrls: ['./event-list.component.css']
+  styleUrls: ['./event-list.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EventListComponent implements OnInit {
   public eventsGrouppedBy3: EventModel[];
