@@ -10,10 +10,10 @@ export class JumbotronComponent implements DoCheck, AfterViewChecked {
 
   constructor() { }
   ngDoCheck(): void {
-    console.log('Jumbotron component ngDoCheck');
+
   }
 
   ngAfterViewChecked(): void {
-    console.log('Jumbotron component ngAfterViewChecked');
+
   }
 }

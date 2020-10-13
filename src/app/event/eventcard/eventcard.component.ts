@@ -14,7 +14,7 @@ export class EventcardComponent implements AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.nextLabel !== null && changes.nextLabel.isFirstChange() === false) {
+    if (changes.nextLabel != null && changes.nextLabel.isFirstChange()) {
       this.cdr.detectChanges();
     } else if (changes.esemeny !== null) {
       const prev: EventModel = changes.esemeny.previousValue;

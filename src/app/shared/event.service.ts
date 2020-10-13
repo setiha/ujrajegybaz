@@ -18,9 +18,10 @@ export class EventService {
 
   getAllEvents(): Observable<any> {
     return this._http.get(`${environment.firebase.baseUrl}/events.json`).pipe(map(data => Object.keys(data).map(key => data[key])));
+
   }
 
-  getEventById(id: string) {
+  getEventById(id: string) {;
     return this._http.get<EventModel>(`${environment.firebase.baseUrl}/events/${id}.json`);
     /* const ev = this._events.filter(x => x.id === +id);
      return ev.length > 0 ? ev[0] : new EventModel(EventModel.emptyEvent);*/
