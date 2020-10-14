@@ -26,17 +26,17 @@ import {BidService} from './shared/bid.service';
 import * as firebase from 'firebase';
 import {environment} from '../environments/environment';
 import { NavbarItemComponent } from './core/navbar-item/navbar-item.component';
+import {EventModule} from "./event/event.module";
+import {EventcardModule} from "./event/eventcard/eventcard.module";
 
 
 @NgModule({
   declarations: [
     AppComponent,
     JumbotronComponent,
-    EventcardComponent,
     FooterComponent,
     NavbarComponent,
     ...AppRoutingModule.routableComponent,
-    EventListComponent,
     TicketDetailsCardComponent,
     BiddingCardComponent,
     BidFormComponent,
@@ -52,7 +52,8 @@ import { NavbarItemComponent } from './core/navbar-item/navbar-item.component';
     CollapseModule.forRoot(),
     AlertModule.forRoot(),
     HttpClientModule,
-    MomentModule
+    MomentModule,
+    EventcardModule
   ],
   providers: [EventService, UserService, TicketService, LoggedInGuard, BidService
 ],
