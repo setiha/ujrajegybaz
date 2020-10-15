@@ -28,20 +28,16 @@ import {environment} from '../environments/environment';
 import { NavbarItemComponent } from './core/navbar-item/navbar-item.component';
 import {EventModule} from "./event/event.module";
 import {EventcardModule} from "./event/eventcard/eventcard.module";
+import {CoreModule} from "./core/core.module";
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    JumbotronComponent,
-    FooterComponent,
-    NavbarComponent,
     ...AppRoutingModule.routableComponent,
     TicketDetailsCardComponent,
     BiddingCardComponent,
     BidFormComponent,
-    LoadingSpinnerComponent,
-    NavbarItemComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,7 +49,8 @@ import {EventcardModule} from "./event/eventcard/eventcard.module";
     AlertModule.forRoot(),
     HttpClientModule,
     MomentModule,
-    EventcardModule
+    EventcardModule,
+    CoreModule
   ],
   providers: [EventService, UserService, TicketService, LoggedInGuard, BidService
 ],

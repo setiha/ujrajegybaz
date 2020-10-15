@@ -9,6 +9,7 @@ import {EventDetailComponent} from "./event-detail/event-detail.component";
 import {FormsModule} from "@angular/forms";
 import {AlertModule} from "ngx-bootstrap/alert";
 import {EventcardModule} from "./eventcard/eventcard.module";
+import {CoreModule} from "../core/core.module";
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import {EventcardModule} from "./eventcard/eventcard.module";
     EventRoutingModule,
     FormsModule,
     AlertModule,
-    EventcardModule
+    EventcardModule,
+    CoreModule
   ]
 })
 export class EventModule { }
