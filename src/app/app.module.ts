@@ -29,6 +29,7 @@ import { NavbarItemComponent } from './core/navbar-item/navbar-item.component';
 import {EventModule} from "./event/event.module";
 import {EventcardModule} from "./event/eventcard/eventcard.module";
 import {CoreModule} from "./core/core.module";
+import {AboutModule} from "./about/about.module";
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import {CoreModule} from "./core/core.module";
     HttpClientModule,
     MomentModule,
     EventcardModule,
-    CoreModule
+    CoreModule,
+    AboutModule
   ],
   providers: [EventService, UserService, TicketService, LoggedInGuard, BidService
 ],

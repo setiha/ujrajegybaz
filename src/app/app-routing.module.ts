@@ -24,7 +24,7 @@ const routes: Routes = [
       {path: ':id', component: BidComponent},
     ]
   },
-  {path: 'about', component: AboutComponent},
+  {path: 'about', loadChildren: 'src/app/about/about.module#AboutModule'},
   {
     path: 'user', children: [
     {path: '', component: ProfileComponent, canActivate: [LoggedInGuard]},
@@ -46,7 +46,6 @@ export class AppRoutingModule {
     HomeComponent,
     PageNotFoundComponent,
     TicketComponent,
-    AboutComponent,
     LoginComponent,
     ProfileComponent,
     ProfileEditComponent,
