@@ -10,7 +10,7 @@ import {EventcardComponent} from './event/eventcard/eventcard.component';
 import {FooterComponent} from './core/footer/footer.component';
 import {NavbarComponent} from './core/navbar/navbar.component';
 import {EventListComponent} from './event/event-list/event-list.component';
-import {EventService} from './shared/event.service';
+import {EventService} from './event/event.service';
 import {UserService} from './shared/user.service';
 import {AlertModule} from 'ngx-bootstrap/alert';
 import {TicketService} from './shared/ticket.service';
@@ -30,6 +30,7 @@ import {EventModule} from "./event/event.module";
 import {EventcardModule} from "./event/eventcard/eventcard.module";
 import {CoreModule} from "./core/core.module";
 import {AboutModule} from "./about/about.module";
+import {ChatModule} from "./chat/chat.module";
 
 
 @NgModule({
@@ -52,9 +53,10 @@ import {AboutModule} from "./about/about.module";
     MomentModule,
     EventcardModule,
     CoreModule,
-    AboutModule
+    EventModule.forRoot(),
+    ChatModule.forRoot()
   ],
-  providers: [EventService, UserService, TicketService, LoggedInGuard, BidService
+  providers: [UserService, TicketService, LoggedInGuard, BidService
 ],
 bootstrap: [AppComponent]
 })

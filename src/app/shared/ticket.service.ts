@@ -6,7 +6,7 @@ import "rxjs/add/operator/mergeMap";
 import {Observable} from "rxjs/Rx";
 import {environment} from "../../environments/environment";
 import {EventModel} from "./event-model";
-import {EventService} from "./event.service";
+import {EventService} from "../event/event.service";
 import {TicketModel} from "./ticket-model";
 import {UserModel} from "./user-model";
 import {UserService} from "./user.service";

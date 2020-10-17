@@ -1,5 +1,5 @@
 export const environment = {
-  production: true,
+  production: false,
   firebase: {
     baseUrl: 'https://jegybazar-133bd.firebaseio.com/',
     registrationUrl: 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key',
