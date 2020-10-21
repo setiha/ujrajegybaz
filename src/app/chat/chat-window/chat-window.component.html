@@ -8,6 +8,30 @@
         <span class="float-left">
           <img src="assets/chat_user_placeholder.svg" alt="Felhasznalo kepe" class="user-image rounded-circle">
         </span>
+      <div class="clearfix chat-message">
+        <div class="chat-message-header">
+          <strong>XY user</strong>
+          <small class="float-right text-muted">X idovel ezelott</small>
+        </div>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi cupiditate dicta dolore eveniet laudantium libero minima nisi placeat rem. A eum illum incidunt inventore maxime non officiis! A, ab aperiam architecto blanditiis dolore esse ex id in incidunt iusto maxime minima quisquam sunt? Animi at beatae mollitia nam natus odit praesentium ut vel! Magni, omnis.Animi at beatae mollitia nam natus odit praesentium ut vel! Magni, omnis.Animi at beatae mollitia nam natus odit praesentium ut vel! Magni, omnis.</p>
+      </div>
+    </li>
+      <li class="left clearfix">
+        <span class="float-left">
+          <img src="assets/chat_user_placeholder.svg" alt="Felhasznalo kepe" class="user-image rounded-circle">
+        </span>
+        <div class="clearfix chat-message">
+          <div class="chat-message-header">
+            <strong>XY user</strong>
+            <small class="float-right text-muted">X idovel ezelott</small>
+          </div>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi cupiditate dicta dolore eveniet laudantium libero minima nisi placeat rem. A eum illum incidunt inventore maxime non officiis! A, ab aperiam architecto blanditiis dolore esse ex id in incidunt iusto maxime minima quisquam sunt? Animi at beatae mollitia nam natus odit praesentium ut vel! Magni, omnis.Animi at beatae mollitia nam natus odit praesentium ut vel! Magni, omnis.Animi at beatae mollitia nam natus odit praesentium ut vel! Magni, omnis.</p>
+        </div>
+      </li>
+      <li class="left clearfix">
+        <span class="float-left">
+          <img src="assets/chat_user_placeholder.svg" alt="Felhasznalo kepe" class="user-image rounded-circle">
+        </span>
         <div class="clearfix chat-message">
           <div class="chat-message-header">
             <strong>XY user</strong>
@@ -18,5 +42,12 @@
       </li>
     </ul>
   </div>
-  <div class="card-footer">footer</div>
+  <div class="card-footer">
+    <form class="input-group" [formGroup] = "form" (ngSubmit)="sendMessage();">
+      <input type="text" name = "chat-message" formControlName="chat-message" class = "form-control" placeholder="Uzenet ..." [ngClass] = "{'is-invalid': invalidChatMessageInput}" #chatMessageInput>
+      <span class="input-group-btn">
+          <button class="btn btn-primary" type = "submit">Kuldes</button>
+          </span>
+    </form>
+  </div>
 </div>

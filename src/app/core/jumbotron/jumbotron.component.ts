@@ -1,4 +1,4 @@
-import {AfterViewChecked, ChangeDetectionStrategy, Component, DoCheck, OnInit} from '@angular/core';
+import {AfterViewChecked, ChangeDetectionStrategy, Component, DoCheck} from '@angular/core';
 
 @Component({
   selector: 'app-jumbotron',
