@@ -6,6 +6,11 @@ import {MockedChatService} from "./mocked-chat.service";
 import {environment} from "../../environments/environment.prod";
 import { ChatWindowComponent } from './chat-window/chat-window.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import {LoadingSpinnerComponent} from "../core/loading-spinner/loading-spinner.component";
+import {CoreModule} from "../core/core.module";
+import { ChatMessageRowComponent } from './chat-message-row/chat-message-row.component';
+import { ChatMessageSendFormComponent } from './chat-message-send-form/chat-message-send-form.component';
+import {MomentModule} from "angular2-moment";
 
 export const chatServiceProvideFactoryFn = (userService: UserService) => {
   return environment.production ?
@@ -14,10 +19,12 @@ export const chatServiceProvideFactoryFn = (userService: UserService) => {
 };
 
 @NgModule({
-  declarations: [ChatWindowComponent],
+  declarations: [ChatWindowComponent, ChatMessageRowComponent, ChatMessageSendFormComponent],
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CoreModule,
+    MomentModule
 
   ],
   exports: [

@@ -5,7 +5,14 @@ import {ChatMessageModel} from "./model/chat.model";
 import {UserService} from "../shared/user.service";
 import "rxjs-compat/add/operator/delay";
 import "rxjs-compat/add/observable/of";
+import * as moment from 'moment';
 
+export const MockedChatDatas = {
+  mockedRoomId: '-MHz1SHl2d9sT6Ya_5f9',
+  mockedUserId: '9KBeOD3RdVbPZWepUXY21s7ZJY52',
+  mockedUserName: 'Sebok Tihamer',
+  mockedUserPictureUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSlUTxvBxTz-aYC99PskUNiwmA2znsk7am9lQ&usqp=CAU'
+};
 @Injectable({
   providedIn: 'root'
 })
@@ -13,6 +20,21 @@ export class MockedChatService extends ChatService{private rooms$ = new Behavior
 
   constructor(userService: UserService) {
     super(userService);
+    //fill mocked message
+    const mockedMessages = [];
+    for (let i = 0; i < 10; i++ ){
+      mockedMessages.push({
+        $id: null,
+        msg: `Test messages: ${i}`,
+        userId: MockedChatDatas.mockedUserId,
+        userName: MockedChatDatas.mockedUserName,
+        userPictureUrl: MockedChatDatas.mockedUserPictureUrl,
+        created: moment().unix()
+      });
+    }
+    const currentRooms = this.rooms$.getValue();
+    currentRooms[MockedChatDatas.mockedRoomId] = new BehaviorSubject<ChatMessageModel[]>(mockedMessages);
+    this.rooms$.next(currentRooms);
   }
 
   addMessage(roomId: string, msg: string): Observable<boolean> {
@@ -26,10 +48,11 @@ export class MockedChatService extends ChatService{private rooms$ = new Behavior
           roomMessages.push(
             new ChatMessageModel({
               $id: null,
-              'msg': msg,
-              userId: user.id,
-              userName: user.name,
-              userPictureUrl: user.profilePictureUrl
+              msg: msg,
+              userId: MockedChatDatas.mockedUserId,
+              userName: MockedChatDatas.mockedUserName,
+              userPictureUrl: MockedChatDatas.mockedUserPictureUrl,
+              created: moment().unix()
 
             })
           );

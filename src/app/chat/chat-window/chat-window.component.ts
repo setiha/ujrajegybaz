@@ -1,5 +1,10 @@
-import {Component, ElementRef, OnInit, ViewChild} from "@angular/core";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Component, Input, OnInit} from "@angular/core";
+import {environment} from "../../../environments/environment";
+import {MockedChatDatas} from "../mocked-chat.service";
+import {Observable} from "rxjs/Rx";
+import {ChatMessageModel} from "../model/chat.model";
+import {ChatService} from "../chat.service";
+
 
 @Component({
   selector: 'app-chat-window',
@@ -7,35 +12,24 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
   styleUrls: ['./chat-window.component.css']
 })
 export class ChatWindowComponent implements OnInit {
-  form: FormGroup;
-  invalidChatMessageInput = false;
-  @ViewChild('chatMessageInput') chatMessageInput: ElementRef;
-  constructor(private fb: FormBuilder) {
+  @Input() roomId = environment.production ? null : MockedChatDatas.mockedRoomId;
+resetForm = false;
+  chatMessage$: Observable<ChatMessageModel[]>;
+  constructor(private chatService: ChatService) {
   }
 
   ngOnInit(): void {
-    this.form = this.fb.group({
-      'chat-message': [null, Validators.required]
-    });
-    this.form.get('chat-message')
-      .valueChanges
-      .distinctUntilChanged(
-        msg => {
-          return ! (msg.length > 0 && this.invalidChatMessageInput);
-        }
-      )
-      .skip(1)
-      .subscribe(
-        msg => this.invalidChatMessageInput = false
-      );
+    this.chatMessage$ = this.chatService.getRoomMessages(this.roomId);
   }
 
-  sendMessage() {
-    if (this.form.invalid) {
-      this.invalidChatMessageInput = true;
-    } else {
-      console.log(this.form.value);
-    }
-    this.chatMessageInput.nativeElement.focus();
+  onNewMessage(newMessage: string) {
+    this.chatService.addMessage(this.roomId, newMessage)
+      .subscribe(resp => {
+        if (resp) {
+this.resetForm = true;
+        } else {
+          alert('hiba a chat uzenet kozben');
+        }
+      });
   }
 }

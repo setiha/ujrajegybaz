@@ -3,51 +3,24 @@
     Chat
   </div>
   <div class="card-body">
-    <ul class="chat-messages-list">
-      <li class="left clearfix">
-        <span class="float-left">
-          <img src="assets/chat_user_placeholder.svg" alt="Felhasznalo kepe" class="user-image rounded-circle">
-        </span>
-      <div class="clearfix chat-message">
-        <div class="chat-message-header">
-          <strong>XY user</strong>
-          <small class="float-right text-muted">X idovel ezelott</small>
-        </div>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi cupiditate dicta dolore eveniet laudantium libero minima nisi placeat rem. A eum illum incidunt inventore maxime non officiis! A, ab aperiam architecto blanditiis dolore esse ex id in incidunt iusto maxime minima quisquam sunt? Animi at beatae mollitia nam natus odit praesentium ut vel! Magni, omnis.Animi at beatae mollitia nam natus odit praesentium ut vel! Magni, omnis.Animi at beatae mollitia nam natus odit praesentium ut vel! Magni, omnis.</p>
-      </div>
-    </li>
-      <li class="left clearfix">
-        <span class="float-left">
-          <img src="assets/chat_user_placeholder.svg" alt="Felhasznalo kepe" class="user-image rounded-circle">
-        </span>
-        <div class="clearfix chat-message">
-          <div class="chat-message-header">
-            <strong>XY user</strong>
-            <small class="float-right text-muted">X idovel ezelott</small>
-          </div>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi cupiditate dicta dolore eveniet laudantium libero minima nisi placeat rem. A eum illum incidunt inventore maxime non officiis! A, ab aperiam architecto blanditiis dolore esse ex id in incidunt iusto maxime minima quisquam sunt? Animi at beatae mollitia nam natus odit praesentium ut vel! Magni, omnis.Animi at beatae mollitia nam natus odit praesentium ut vel! Magni, omnis.Animi at beatae mollitia nam natus odit praesentium ut vel! Magni, omnis.</p>
-        </div>
-      </li>
-      <li class="left clearfix">
-        <span class="float-left">
-          <img src="assets/chat_user_placeholder.svg" alt="Felhasznalo kepe" class="user-image rounded-circle">
-        </span>
-        <div class="clearfix chat-message">
-          <div class="chat-message-header">
-            <strong>XY user</strong>
-            <small class="float-right text-muted">X idovel ezelott</small>
-          </div>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi cupiditate dicta dolore eveniet laudantium libero minima nisi placeat rem. A eum illum incidunt inventore maxime non officiis! A, ab aperiam architecto blanditiis dolore esse ex id in incidunt iusto maxime minima quisquam sunt? Animi at beatae mollitia nam natus odit praesentium ut vel! Magni, omnis.Animi at beatae mollitia nam natus odit praesentium ut vel! Magni, omnis.Animi at beatae mollitia nam natus odit praesentium ut vel! Magni, omnis.</p>
-        </div>
-      </li>
-    </ul>
+
+    <ng-container *ngIf="chatMessage$ | async as chatMessage; else loadingChat">
+      <ng-container *ngIf="chatMessage.length > 0; else notFoundMessage">
+        <ul class="chat-messages-list">
+<app-chat-message-row [msg] ='msg' *ngFor="let msg of chatMessage"></app-chat-message-row>
+        </ul>
+      </ng-container>
+      <ng-template #notFoundMessage>
+        <strong class="text-muted">Nincs meg uzenet</strong>
+      </ng-template>
+    </ng-container>
+    <ng-template #loadingChat>
+      <app-loading-spinner [loaderWidth]="100" [loaderHeight]="100"></app-loading-spinner>
+    </ng-template>
   </div>
   <div class="card-footer">
-    <form class="input-group" [formGroup] = "form" (ngSubmit)="sendMessage();">
-      <input type="text" name = "chat-message" formControlName="chat-message" class = "form-control" placeholder="Uzenet ..." [ngClass] = "{'is-invalid': invalidChatMessageInput}" #chatMessageInput>
-      <span class="input-group-btn">
-          <button class="btn btn-primary" type = "submit">Kuldes</button>
-          </span>
-    </form>
+<app-chat-message-send-form
+  [(reset)] = "resetForm"
+  (newMessage)="onNewMessage($event)"></app-chat-message-send-form>
   </div>
 </div>
