@@ -7,7 +7,7 @@
     <ng-container *ngIf="chatMessage$ | async as chatMessage; else loadingChat">
       <ng-container *ngIf="chatMessage.length > 0; else notFoundMessage">
         <ul class="chat-messages-list">
-<app-chat-message-row [msg] ='msg' *ngFor="let msg of chatMessage"></app-chat-message-row>
+<app-chat-message-row [msg] ="msg" *ngFor="let msg of chatMessage; trackBy:trackByMessages"></app-chat-message-row>
         </ul>
       </ng-container>
       <ng-template #notFoundMessage>

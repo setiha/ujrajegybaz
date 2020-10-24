@@ -2,6 +2,6 @@
   <input type="text" name="chat-message" formControlName="chat-message" class="form-control"
          placeholder="Uzenet ..." [ngClass]="{'is-invalid': invalidChatMessageInput}" #chatMessageInput>
   <span class="input-group-btn">
-          <button class="btn btn-primary" type="submit">Kuldes</button>
+          <button class="btn btn-primary" type="submit" [disabled] = "disabled">Kuldes</button>
           </span>
 </form>

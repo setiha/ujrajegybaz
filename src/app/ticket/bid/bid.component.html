@@ -10,7 +10,9 @@
         </div>
     </div>
   </div>
+  <app-chat-window *ngIf="isLoggedIn$ | async"></app-chat-window>
 </ng-container>
 <ng-template #loading>
   <app-loading-spinner></app-loading-spinner>
 </ng-template>
+
