@@ -1,6 +1,7 @@
 <ng-container *ngIf="(ticket$ | async) as ticket; else loading">
   <div class="container">
     <div class="row">
+<<<<<<< HEAD
       <div class="col-sm order-md-2">
         <app-eventcard [esemeny]="ticket.event" nextLabel="Esemény megtekintése"></app-eventcard>
       </div>
@@ -13,7 +14,23 @@
     </div>
   </div>
   <app-chat-window *ngIf="isLoggedIn$ | async" [roomId]="ticket.id"></app-chat-window>
+=======
+        <div class="col-sm order-md-2">
+          <app-eventcard [esemeny]="ticket.event" nextLabel="Esemeny megtekintese"></app-eventcard>
+        </div>
+      <div class="col-sm-12 col-md-8">
+          <app-ticket-details-card [ticket]="ticket" [loading]="progressRefreshTicket"></app-ticket-details-card>
+          <app-bidding-card (bid) = "onBid()"[ticket]="ticket" [isLoggedIn]="isLoggedIn$ | async"></app-bidding-card>
+        </div>
+    </div>
+  </div>
+  <app-chat-window *ngIf="isLoggedIn$ | async"></app-chat-window>
+>>>>>>> f88b618978b6ff27dd69dc687ed7d5f11d4be11e
 </ng-container>
 <ng-template #loading>
   <app-loading-spinner></app-loading-spinner>
 </ng-template>
+<<<<<<< HEAD
+=======
+
+>>>>>>> f88b618978b6ff27dd69dc687ed7d5f11d4be11e

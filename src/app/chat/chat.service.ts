@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Injectable, Optional } from '@angular/core';
 import { UserService } from '../shared/user.service';
 import { Observable } from 'rxjs/Observable';
@@ -58,5 +59,26 @@ export class ChatService {
               new ChatMessageModel(Object.assign(chatMessage, { $id: chatMessage.$key }))
           )
       );
+=======
+import {Injectable} from "@angular/core";
+import {UserService} from "../shared/user.service";
+import {Observable} from "rxjs/Rx";
+import {ChatMessageModel} from "./model/chat.model";
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ChatService {
+
+  constructor(protected userService: UserService) {
+  }
+
+  addMessage(roomId: string, msg: string): Observable<boolean> {
+    return null;
+  }
+
+  getRoomMessages(roomId: string): Observable<ChatMessageModel[]> {
+    return null;
+>>>>>>> f88b618978b6ff27dd69dc687ed7d5f11d4be11e
   }
 }
