@@ -41,7 +41,6 @@ export class MockedChatService extends ChatService{private rooms$ = new Behavior
     const rooms = this.rooms$.getValue();
     const roomMessages = rooms[roomId].getValue();
     return this.userService.getCurrentUser()
-      .delay(300)
       .pipe()
       .switchMap(
         user => {
@@ -62,11 +61,7 @@ export class MockedChatService extends ChatService{private rooms$ = new Behavior
       );
   }
 
-<<<<<<< HEAD
-  getRoomMessages(roomId: string): Observable<ChatMessageModel> {
-=======
   getRoomMessages(roomId: string): Observable<ChatMessageModel[]> {
->>>>>>> f88b618978b6ff27dd69dc687ed7d5f11d4be11e
     const rooms = this.rooms$.getValue();
     if (rooms[roomId] == null){
       //first init room

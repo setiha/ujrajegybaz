@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "jegybazar-133bd"
+  },
+  "targets": {
+    "jegybazar-133bd": {
+      "hosting": {
+        "jegybaz": [
+          "jegybazar-133bd"
+        ]
+      }
+    }
   }
 }

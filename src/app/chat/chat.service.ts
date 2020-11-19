@@ -1,21 +1,21 @@
-<<<<<<< HEAD
-import { Injectable, Optional } from '@angular/core';
-import { UserService } from '../shared/user.service';
-import { Observable } from 'rxjs/Observable';
-import { ChatMessageModel } from './model/chat.model';
-import { AngularFireDatabase } from 'angularfire2/database';
-import 'rxjs/add/operator/switchMap';
+import {Injectable, Optional} from "@angular/core";
+import {UserService} from "../shared/user.service";
+import {Observable} from "rxjs/Rx";
+import {AngularFireDatabase} from "angularfire2/database";
+import {ChatMessageModel} from "./model/chat.model";
 import * as moment from 'moment';
-
-
-@Injectable()
+import "rxjs-compat/add/operator/switchMap";
+import "rxjs-compat/add/operator/map";
+import {stringify} from "@angular/compiler/src/util";
+@Injectable({
+  providedIn: 'root'
+})
 export class ChatService {
   private static PATH = 'chat/ticket_room';
 
-  constructor(
-    protected userService: UserService,
-    @Optional() protected afDb?: AngularFireDatabase
-  ) { }
+  constructor(protected userService: UserService,
+              @Optional() protected afDb?: AngularFireDatabase) {
+  }
 
   addMessage(roomId: string, msg: string): Observable<boolean> {
     return this.userService.getCurrentUser()
@@ -27,7 +27,7 @@ export class ChatService {
               room.push(
                 new ChatMessageModel({
                   $id: null,
-                  'msg': msg,
+                  msg: msg,
                   userId: user.id,
                   userName: user.name,
                   userPictureUrl: user.profilePictureUrl,
@@ -50,35 +50,14 @@ export class ChatService {
       );
   }
 
-  getRoomMessages(roomId: string): Observable<any> {
-     return this.afDb.list<any>(`${ChatService.PATH}/${roomId}`).valueChanges()
-       .map(
+  getRoomMessages(roomId: string) {
+    return this.afDb.list(`${ChatService.PATH}/${roomId}`).valueChanges()
+      .map(
         list =>
           list.map(
             chatMessage =>
-              new ChatMessageModel(Object.assign(chatMessage, { $id: chatMessage.$key }))
+              new ChatMessageModel(Object.assign(chatMessage, {$id: chatMessage.key}))
           )
       );
-=======
-import {Injectable} from "@angular/core";
-import {UserService} from "../shared/user.service";
-import {Observable} from "rxjs/Rx";
-import {ChatMessageModel} from "./model/chat.model";
-
-@Injectable({
-  providedIn: 'root'
-})
-export class ChatService {
-
-  constructor(protected userService: UserService) {
-  }
-
-  addMessage(roomId: string, msg: string): Observable<boolean> {
-    return null;
-  }
-
-  getRoomMessages(roomId: string): Observable<ChatMessageModel[]> {
-    return null;
->>>>>>> f88b618978b6ff27dd69dc687ed7d5f11d4be11e
   }
 }
