@@ -48,7 +48,7 @@ export class TicketService {
   //                 es mar nagyon vagytam valami agyzsibbasztora a projektben :)
   getAllTickets() {
     return this._http.get(`${environment.firebase.baseUrl}/tickets.json`)
-      .map(ticketsObject => Object.values(ticketsObject))
+      .map(ticketsObject => Object.value(ticketsObject))
       .map(ticketsArray => ticketsArray.map(tm =>
         Observable.zip(
           Observable.of(tm),
