@@ -1,55 +1,52 @@
-import {Injectable} from '@angular/core';
+import {Injectable} from "@angular/core";
 import {EventModel} from "../shared/event-model";
-import {HttpClient} from '@angular/common/http';
-import {$} from "protractor";
-import {environment} from "../../environments/environment";
-import {Observable} from "rxjs/index";
-import {map} from 'rxjs/internal/operators';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMap';
+import {Observable} from "rxjs/Observable";
+import "rxjs/add/operator/map";
+import "rxjs/add/operator/switchMap";
+import {AngularFireDatabase} from "angularfire2/database";
 
+import "rxjs-compat/add/observable/fromPromise";
+import {stringify} from "@angular/compiler/src/util";
 @Injectable({
   providedIn: 'root'
 })
 export class EventService {
+  private proba = 9;
+  constructor(private afDb: AngularFireDatabase) {
 
-  constructor(private _http: HttpClient) {
+}
+
+  getAllEvents() {
+    return this.afDb.list(`events`).valueChanges().map(
+      events => events.map((event, index) => new EventModel(Object.assign(event)
+      )));
   }
 
-  getAllEvents(): Observable<any> {
-    return this._http.get(`${environment.firebase.baseUrl}/events.json`).pipe(map(data => Object.keys(data).map(key => data[key])));
-
-  }
-
-  getEventById(id: string) {;
-    return this._http.get<EventModel>(`${environment.firebase.baseUrl}/events/${id}.json`);
-    /* const ev = this._events.filter(x => x.id === +id);
-     return ev.length > 0 ? ev[0] : new EventModel(EventModel.emptyEvent);*/
+  getEventById(id: string) {
+    return this.afDb.object(`events/${id}`);
   }
 
   save(param: EventModel) {
-    if (param.id) {//update ag
-      return this._http.put(`${environment.firebase.baseUrl}/events/${param.id}.json`, param);
-    } else { //create ag
-      return this._http.post(`${environment.firebase.baseUrl}/events.json`, param)
-        .map((fbPostReturn: { name: string }) => fbPostReturn.name)
-        .switchMap(fbId => this._http.patch(
-          `${environment.firebase.baseUrl}/events/${fbId}.json`,
-          {id: fbId}
-        ));
+    if (param.id) {
+      // update
+      return Observable.fromPromise(this.afDb.object(`events/`).update(param.id));
+    } else {
+      param.id = this.proba ++;
+      return Observable.fromPromise(this.afDb.object(`events/${param.id}`).set(param));
     }
   }
 
-  delete(param: EventModel) {
-    return this._http.delete(`${environment.firebase.baseUrl}/events/${param.id}.json`);
+  delete(event: EventModel) {
+    return Observable.fromPromise(this.afDb.object(`events/${event.id}`).remove());
   }
 
-  addTicket(eventId: string, ticketId: string): Observable<string> {
-    return this._http.patch(
-      `${environment.firebase.baseUrl}/events/${eventId}/tickets.json`,
-      {[ticketId]: true}
-    )
-      .map(rel => Object.keys(rel)[0]);
+  addTicket(eventId: string, ticketId: string): Observable<any> {
+    return Observable.fromPromise(this.afDb.list(`events/${eventId}/tickets`).push(
+      ticketId));
+  }
+
+  getMaxId() {
+    return this.getAllEvents().subscribe(data => data.reduce((x, y) => x.id > y.id ? x : y).id + 1);
   }
 }
 

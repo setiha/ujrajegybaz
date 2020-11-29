@@ -1,11 +1,12 @@
 import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import 'rxjs/add/operator/takeUntil';
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs/Subject';
 import { EventModel } from '../../shared/event-model';
 import { EventService } from '../event.service';
 import { UserService } from '../../shared/user.service';
+
 
 @Component({
   selector: 'app-event-detail',
@@ -27,9 +28,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     const evId = this._route.snapshot.params['id'];
-console.log(evId);
-    // ez egy megoldas arra, hogy egyben kezeljuk az edit es create funkcionalitast
-    // illetve edit esetben is van mivel dolgozni amig megerkezik az adat igy user mindig lat valamit
+
     this.event = new EventModel();
 
     // ha nincs eventId-nk akkor ujat hozunk letre es emiatt szerkesztessel indulunk
@@ -38,8 +37,7 @@ console.log(evId);
 
     // ezt a reszt izgalmas atirni swithmap-el meg startsWith-el es nem snapshotbol dolgozni
     if (evId) {
-      this._eventService.getEventById(evId)
-        .takeUntil(this._destroy$)
+      this._eventService.getEventById(evId).valueChanges()
         .subscribe(evm => this.event = evm);
       console.log('kaptunk eventid-t', evId);
     }
@@ -69,7 +67,9 @@ console.log(evId);
       );
   }
 
-  delete() {
+
+
+  /*delete() {
     this._eventService.delete(this.event)
       .takeUntil(this._destroy$)
       .subscribe(
@@ -78,9 +78,10 @@ console.log(evId);
           console.warn(`Problémánk van a form mentésnél: ${err}`);
         }
       );
-  }
+  }*/
 
   navigateBack() {
     this._location.back();
   }
 }
+

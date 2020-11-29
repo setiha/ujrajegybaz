@@ -74,7 +74,7 @@ save(param){
     console.log('kileptunk');
   }
 
-addTicket(ticketId: string): Observable<string>{
+addTicket(ticketId: string): Observable<any>{
   return this._user.first().flatMap(
     user => {
       return this.afDb.list(`users/${user.id}/tickets`).push(ticketId);

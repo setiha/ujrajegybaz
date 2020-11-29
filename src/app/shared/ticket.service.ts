@@ -15,14 +15,15 @@ import "rxjs/add/operator/map";
 import "rxjs/add/operator/switchMap";
 import * as firebase from "firebase";
 import "rxjs-compat/add/operator/first";
-
+import {AngularFireDatabase} from "angularfire2/database";
+import { switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class TicketService {
 
   constructor(private _eventService: EventService,
               private _userService: UserService,
-              private _http: HttpClient) {
+              private afDb: AngularFireDatabase) {
   }
 
   // Mi is tortenik itt, mert izi :) - logikai lepesekkel, hogy hogyan epulunk fel
@@ -47,13 +48,12 @@ export class TicketService {
   // puffancs uzeni: "elkepzelheto", hogy egyszerubb megoldas is van, de szerintem ez szep
   //                 es mar nagyon vagytam valami agyzsibbasztora a projektben :)
   getAllTickets() {
-    return this._http.get(`${environment.firebase.baseUrl}/tickets.json`)
-      .map(ticketsObject => Object.value(ticketsObject))
-      .map(ticketsArray => ticketsArray.map(tm =>
+    return this.afDb.list('tickets').valueChanges()
+      .map(ticketsArray => ticketsArray.map(ticket =>
         Observable.zip(
-          Observable.of(tm),
-          this._eventService.getEventById(tm.eventId),
-          this._userService.getUserById(tm.sellerUserId),
+          Observable.of(new TicketModel(ticket)),
+          this._eventService.getEventById(ticket.eventId),
+          this._userService.getUserById(ticket.sellerUserId),
           (t: TicketModel, e: EventModel, u: UserModel) => {
             return {
               ...t,
@@ -61,36 +61,9 @@ export class TicketService {
               seller: u
             };
           })
-      ))
-      .switchMap(zipStreamArray => Observable.forkJoin(zipStreamArray))
-      ;
+      ));
   }
 
-  create(param: TicketModel) {
-    return this._http
-      .post<{ name: string }>(`${environment.firebase.baseUrl}/tickets.json`, param)
-      // konnyitsuk meg magunknak kicsit az eletunket es kuldjuk tovabb csak azt ami kell nekunk
-      .map(fbPostReturn => fbPostReturn.name)
-      // ez itt amiatt kell, hogy meglegyen a fbid objektumon belul is,
-      // mert kesobb epitunk erre az infora
-      // viszont ezt csak a post valaszaban kapjuk vissza
-      // es legalabb hasznaljuk a patch-et is :)
-      .switchMap(ticketId => this._saveGeneratedId(ticketId))
-      // keszitsuk kicsit elo a jovilagot es vezessuk esemenyeknel is a hozzajuk tartozo ticketeket
-      .switchMap(ticketId => this._eventService.addTicket(param.eventId, ticketId))
-      // keszitsuk kicsit elo a jovilagot es vezessuk a profilunknal a hozzank tartozo ticketeket
-      .switchMap(ticketId => this._userService.addTicket(ticketId))
-      ;
-
-  }
-
-  private _saveGeneratedId(ticketId: string): Observable<string> {
-    return this._http.patch<{ id: string }>(
-      `${environment.firebase.baseUrl}/tickets/${ticketId}.json`,
-      {id: ticketId}
-    )
-      .map(x => x.id);
-  }
 
   getOneOnce(id: string): Observable<TicketModel> {
     return this.getOne(id).first();
@@ -119,9 +92,8 @@ export class TicketService {
       }
     );
   }
-
-  modify(ticket: TicketModel) {
-    return this._http
-      .put(`${environment.firebase.baseUrl}/tickets/${ticket.id}.json`, ticket);
-  }
+create(ticket: TicketModel){
+    return Observable.fromPromise(this.afDb.list('tickets').push(ticket)) ;
+}
+  modify(ticket: TicketModel) {}
 }

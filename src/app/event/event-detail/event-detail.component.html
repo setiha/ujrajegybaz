@@ -29,7 +29,7 @@
 
         <div class="form-group">
           <label for="idopont">Esemény időpontja</label>
-          <input type="text" id="idopont"
+          <input type="datetime-local" id="idopont"
                  class="form-control mb-3"
                  placeholder="Esemény időpontja"
                  required
@@ -72,7 +72,7 @@
           </alert>
         </div>
         <div class="text-center mb-3">
-          <ng-container *ngIf="userService.isLoggedIn$">
+          <ng-container *ngIf="userService.isLoggedIn$ | async">
             <ng-container *ngIf="viewForm; else editButtons">
               <button type="button"
                       class="btn btn-primary btn-lg"
@@ -88,8 +88,8 @@
               </button>
               <button type="button"
                       class="btn btn-danger btn-lg"
-                      (click)="delete()"
                       *ngIf="event.id"
+                      (click)="delete()"
               >Törlés
               </button>
             </ng-template>
