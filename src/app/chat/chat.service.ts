@@ -26,7 +26,7 @@ export class ChatService {
               const room = this.afDb.list(`${ChatService.PATH}/${roomId}`);
               room.push(
                 new ChatMessageModel({
-                  $id: null,
+                  $id: '',
                   msg: msg,
                   userId: user.id,
                   userName: user.name,
@@ -51,12 +51,12 @@ export class ChatService {
   }
 
   getRoomMessages(roomId: string) {
-    return this.afDb.list(`${ChatService.PATH}/${roomId}`).valueChanges()
+    return this.afDb.list<ChatMessageModel>(`${ChatService.PATH}/${roomId}`).valueChanges()
       .map(
         list =>
           list.map(
             chatMessage =>
-              new ChatMessageModel(Object.assign(chatMessage, {$id: chatMessage.key}))
+              new ChatMessageModel(Object.assign(chatMessage, {$id: chatMessage.$key}))
           )
       );
   }

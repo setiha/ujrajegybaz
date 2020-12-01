@@ -38,7 +38,7 @@ export class BidComponent implements OnInit, OnDestroy {
     const handle404 = () => {
       this.router.navigate(['404']);
     }
-    this.ticket$ = this.ticketService.getOne(id).share();
+    this.ticket$ = this.ticketService.getOne(id);
     this.ticketWatcherSubscription = this.ticket$.subscribe({
       next: ticket => {
         this.progressRefreshTicket = false;

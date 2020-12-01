@@ -29,7 +29,7 @@ export class UserService {
     this.afAuth.authState.subscribe(
       user => {
         if (user != null) {
-          this.getUserById(user.uid).valueChanges().subscribe(remoteUser => {
+          this.getUserById(user.uid).subscribe(remoteUser => {
             this._user.next(remoteUser);
             this.isLoggedIn$.next(true);
           });
@@ -61,7 +61,7 @@ save(param){
 }
 
   getUserById(fbid: string) {
-    return this.afDb.object(`users/${fbid}`);
+    return this.afDb.object(`users/${fbid}`).valueChanges();
   }
 
   getCurrentUser() {
@@ -74,7 +74,7 @@ save(param){
     console.log('kileptunk');
   }
 
-addTicket(ticketId: string): Observable<any>{
+addTicket(ticketId: any): Observable<any>{
   return this._user.first().flatMap(
     user => {
       return this.afDb.list(`users/${user.id}/tickets`).push(ticketId);

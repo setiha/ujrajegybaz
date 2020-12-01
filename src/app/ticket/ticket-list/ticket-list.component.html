@@ -3,9 +3,8 @@
   <div class="col-auto text-center">
     <label>Keresés a jegyek között</label>
     <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Esemény neve">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Keresés
-      </button>
+      <input class="form-control mr-sm-2" type="search" placeholder="Esemény neve" #searchInput>
+
     </form>
   </div>
 
@@ -34,14 +33,14 @@
   <tbody>
   <tr *ngFor="let ticket of tickets$ | async">
     <td scope="row">
-      <a [routerLink]="['/event', ticket.eventId, 'edit']">
+      <a [routerLink]="['/event', ticket.eventId]">
         {{ ticket.event.name }}
       </a>
     </td>
     <td>{{ ticket.bidEndDate | date}}</td>
     <td class="d-none d-md-table-cell">{{ ticket.seller.name }}</td>
     <td class="d-none d-md-table-cell">{{ ticket.numberOfTickets}}</td>
-    <td><a [routerLink]="['/ticket', ticket.id$]">Tovább a licithez</a></td>
+    <td><a [routerLink]="['/ticket', ticket.id]">Tovább a licithez</a></td>
   </tr>
 
   </tbody>

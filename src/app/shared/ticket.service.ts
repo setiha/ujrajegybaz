@@ -1,23 +1,22 @@
-import {HttpClient} from "@angular/common/http";
-import {Injectable} from "@angular/core";
-import "rxjs/add/observable/forkJoin";
-import "rxjs/add/observable/zip";
-import "rxjs/add/operator/mergeMap";
-import {Observable} from "rxjs/Rx";
-import {environment} from "../../environments/environment";
-import {EventModel} from "./event-model";
-import {EventService} from "../event/event.service";
-import {TicketModel} from "./ticket-model";
-import {UserModel} from "./user-model";
-import {UserService} from "./user.service";
-import "rxjs/add/observable/of";
-import "rxjs/add/operator/map";
-import "rxjs/add/operator/switchMap";
 import * as firebase from "firebase";
-import "rxjs-compat/add/operator/first";
 import {AngularFireDatabase} from "angularfire2/database";
-import { switchMap } from 'rxjs/operators';
+import {Injectable} from "@angular/core";
+import {EventService} from "../event/event.service";
+import {UserService} from "./user.service";
+import {TicketModel} from "./ticket-model";
+import {EventModel} from "./event-model";
+import {UserModel} from "./user-model";
+import "rxjs-compat/add/observable/forkJoin";
+import "rxjs-compat/add/operator/switchMap";
+import "rxjs-compat/add/operator/mapTo";
+import "rxjs-compat/add/observable/of";
+import "rxjs-compat/add/operator/first";
+import "rxjs-compat/add/observable/fromPromise";
+import "rxjs-compat/add/observable/combineLatest";
+import "rxjs-compat/add/operator/map";
 
+import {Observable} from "rxjs/Rx";
+import {any} from "codelyzer/util/function";
 @Injectable()
 export class TicketService {
 
@@ -48,10 +47,10 @@ export class TicketService {
   // puffancs uzeni: "elkepzelheto", hogy egyszerubb megoldas is van, de szerintem ez szep
   //                 es mar nagyon vagytam valami agyzsibbasztora a projektben :)
   getAllTickets() {
-    return this.afDb.list('tickets').valueChanges()
+    return this.afDb.list<TicketModel>('tickets').valueChanges()
       .map(ticketsArray => ticketsArray.map(ticket =>
         Observable.zip(
-          Observable.of(new TicketModel(ticket)),
+          Observable.of(ticket),
           this._eventService.getEventById(ticket.eventId),
           this._userService.getUserById(ticket.sellerUserId),
           (t: TicketModel, e: EventModel, u: UserModel) => {
@@ -61,7 +60,8 @@ export class TicketService {
               seller: u
             };
           })
-      ));
+      ))
+      .switchMap(zipStreamArray => Observable.forkJoin(zipStreamArray));
   }
 
 
@@ -69,31 +69,34 @@ export class TicketService {
     return this.getOne(id).first();
   }
 
-  getOne(id: string): Observable<any> {
-    return new Observable(
-      observer => {
-        const dbTicket = firebase.database().ref(`tickets/${id}`);
-        dbTicket.on('value', snapshot => {
-          const ticket = snapshot.val();
-
-          const subscription = Observable.combineLatest(
-            Observable.of(new TicketModel(ticket)),
-            this._eventService.getEventById(ticket.eventId),
-            this._userService.getUserById(ticket.sellerUserId),
+  getOne(id: string): Observable<TicketModel> {
+    return this.afDb.object<TicketModel>(`tickets/${id}`).valueChanges()
+      .flatMap(
+        ticketFirebaseRemoteModel => {
+          return Observable.combineLatest(
+            Observable.of(new TicketModel(ticketFirebaseRemoteModel)),
+            this._eventService.getEventById(ticketFirebaseRemoteModel.eventId),
+            this._userService.getUserById(ticketFirebaseRemoteModel.sellerUserId),
             (t: TicketModel, e: EventModel, u: UserModel) => {
               return t.setEvent(e).setSeller(u);
-            }).subscribe(
-            ticketModel => {
-              observer.next(ticketModel);
-              subscription.unsubscribe();
-            }
-          );
-        });
-      }
-    );
+            });
+        }
+      );
   }
-create(ticket: TicketModel){
-    return Observable.fromPromise(this.afDb.list('tickets').push(ticket)) ;
-}
-  modify(ticket: TicketModel) {}
+
+  create(ticket: TicketModel) {
+    return Observable.fromPromise(this.afDb.list<TicketModel>('tickets').push(ticket))
+      .map(resp => resp.key
+      )
+      .do(
+        ticketId => Observable.combineLatest(
+          this._eventService.addTicket(ticket.eventId, ticketId),
+          this._userService.addTicket(ticketId)
+        )
+      );
+  }
+
+  modify(ticket: TicketModel) {
+    return Observable.fromPromise(this.afDb.object(`tickets/${ticket.id}`).update(ticket));
+  }
 }

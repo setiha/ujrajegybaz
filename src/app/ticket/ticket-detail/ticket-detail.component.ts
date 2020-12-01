@@ -31,7 +31,7 @@ export class TicketDetailComponent implements OnInit, OnDestroy {
     this.ticket = new TicketModel();
     // ez egy kerulo megoldas, hogy tudjak select-nek default uzenetet kijelezeni
     // nem igazan szep, de tobbet most nem ert nekem a kerdes
-    this.ticket.eventId = '';
+    this.ticket.eventId = null;
     this._userService.getCurrentUser().subscribe(
       user => this.ticket.sellerUserId = user.id
     );

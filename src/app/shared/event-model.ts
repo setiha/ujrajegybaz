@@ -1,10 +1,10 @@
 export class EventModel {
-  id: string;
+  id: number;
   name: string;
   date: string;
   pictureURL: string;
   description: string;
-  tickets: {[key:string]: string};
+  tickets: {[key: string]: string};
 
   constructor(param?: EventModel) {
     if (param) {

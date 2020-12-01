@@ -1,4 +1,4 @@
-///<reference path="../../../../node_modules/@angular/core/core.d.ts"/>
+
 import {
   ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output,
   SimpleChanges

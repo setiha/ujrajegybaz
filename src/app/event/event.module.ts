@@ -30,7 +30,7 @@ import {EventService} from "./event.service";
   ]
 })
 export class EventModule {
-  static forRoot(): ModuleWithProviders{
+  static forRoot(): ModuleWithProviders<EventModule>{
     return{
       ngModule: EventModule,
       providers: [EventService]

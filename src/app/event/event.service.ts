@@ -1,12 +1,11 @@
 import {Injectable} from "@angular/core";
 import {EventModel} from "../shared/event-model";
-import {Observable} from "rxjs/Observable";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/switchMap";
 import {AngularFireDatabase} from "angularfire2/database";
-
+import {map} from "rxjs/internal/operators";
 import "rxjs-compat/add/observable/fromPromise";
-import {stringify} from "@angular/compiler/src/util";
+import {Observable} from "rxjs/Rx";
 @Injectable({
   providedIn: 'root'
 })
@@ -17,13 +16,13 @@ export class EventService {
 }
 
   getAllEvents() {
-    return this.afDb.list(`events`).valueChanges().map(
-      events => events.map((event, index) => new EventModel(Object.assign(event)
+    return this.afDb.list(`events`).valueChanges().pipe(map(
+      events => events.map((event: EventModel) => new EventModel(Object.assign(event, {id: event.id}))
       )));
   }
 
-  getEventById(id: string) {
-    return this.afDb.object(`events/${id}`);
+  getEventById(id: any) {
+    return this.afDb.object<EventModel>(`events/${id}`).valueChanges();
   }
 
   save(param: EventModel) {
@@ -40,13 +39,10 @@ export class EventService {
     return Observable.fromPromise(this.afDb.object(`events/${event.id}`).remove());
   }
 
-  addTicket(eventId: string, ticketId: string): Observable<any> {
+  addTicket(eventId: number, ticketId: any): Observable<any> {
     return Observable.fromPromise(this.afDb.list(`events/${eventId}/tickets`).push(
       ticketId));
   }
 
-  getMaxId() {
-    return this.getAllEvents().subscribe(data => data.reduce((x, y) => x.id > y.id ? x : y).id + 1);
-  }
 }
 

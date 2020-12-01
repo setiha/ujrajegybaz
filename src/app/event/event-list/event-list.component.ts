@@ -1,4 +1,4 @@
-///<reference path="../../../../node_modules/rxjs-compat/add/operator/distinctUntilChanged.d.ts"/>
+
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from "@angular/core";
 import {EventService} from "../event.service";
 import {UserService} from "../../shared/user.service";
@@ -8,10 +8,9 @@ import "rxjs/add/observable/fromEvent";
 import {Observable} from "rxjs/Observable";
 import {BehaviorSubject} from "rxjs/Rx";
 import "rxjs-compat/add/operator/map";
-import { distinctUntilChanged } from 'rxjs/operators';
-import {delay} from "rxjs-compat/operator/delay";
 import {map} from "rxjs/internal/operators";
 import {EventModel} from "../../shared/event-model";
+import {distinctUntilChanged} from "rxjs-compat/operator/distinctUntilChanged";
 
 @Component({
   selector: 'app-event-list',
