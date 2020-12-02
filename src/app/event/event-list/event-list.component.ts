@@ -1,16 +1,15 @@
-
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from "@angular/core";
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild} from "@angular/core";
 import {EventService} from "../event.service";
 import {UserService} from "../../shared/user.service";
 
 import "rxjs/add/operator/delay";
 import "rxjs/add/observable/fromEvent";
 import {Observable} from "rxjs/Observable";
-import {BehaviorSubject} from "rxjs/Rx";
+import {BehaviorSubject, Subscription} from "rxjs/Rx";
 import "rxjs-compat/add/operator/map";
 import {map} from "rxjs/internal/operators";
 import {EventModel} from "../../shared/event-model";
-import {distinctUntilChanged} from "rxjs-compat/operator/distinctUntilChanged";
+
 
 @Component({
   selector: 'app-event-list',
@@ -18,19 +17,26 @@ import {distinctUntilChanged} from "rxjs-compat/operator/distinctUntilChanged";
   styleUrls: ['./event-list.component.css'],
 
 })
-export class EventListComponent implements OnInit, AfterViewInit {
-
-  public events$: Observable<EventModel[]>;
-
+export class EventListComponent implements OnInit, AfterViewInit, OnDestroy {
+  public events: EventModel[];
   @ViewChild('searchInput') searchInput: ElementRef;
   private filteredText$ = new BehaviorSubject<any>(null);
+  private eventSubscription: Subscription;
+  private isLoggedInSubscription: Subscription;
+  private isLoggedIn: boolean;
 
-  constructor(private _eventService: EventService, public userService: UserService) {
+
+  constructor(private _eventService: EventService,
+              public userService: UserService,
+              private cdr: ChangeDetectorRef) {
+    this.isLoggedInSubscription = userService.isLoggedIn$.subscribe(
+      isLoggedIn => this.isLoggedIn = isLoggedIn
+    );
   }
 
   ngOnInit() {
 
-    this.events$ = this._eventService.getAllEvents()
+    this.eventSubscription = this._eventService.getAllEvents()
       .flatMap(
         events => {
           return this.filteredText$.map(
@@ -47,12 +53,18 @@ export class EventListComponent implements OnInit, AfterViewInit {
             }
           );
         }
+      ).subscribe(
+        events => {
+          this.events = events;
+          this.cdr.detectChanges();
+        }
       );
   }
 
   ngAfterViewInit(): void {
     Observable.fromEvent(this.searchInput.nativeElement, 'keyup').pipe(map((event: Event) => {
-      return (event.srcElement as HTMLInputElement).value; })).distinctUntilChanged().subscribe(
+      return (event.srcElement as HTMLInputElement).value;
+    })).distinctUntilChanged().subscribe(
       text => {
         if (text.length === 0) {
           text = null;
@@ -61,7 +73,11 @@ export class EventListComponent implements OnInit, AfterViewInit {
         console.log(this.filteredText$.value);
       }
     );
+    this.cdr.detach();
+  }
 
-
+  ngOnDestroy(): void {
+    this.eventSubscription.unsubscribe();
+    this.isLoggedInSubscription.unsubscribe();
   }
 }
