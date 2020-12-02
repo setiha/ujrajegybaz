@@ -1,23 +1,30 @@
 import {Observable} from "rxjs/Observable";
 import {TicketService} from "../../shared/ticket.service";
 import {UserService} from "../../shared/user.service";
-import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild} from "@angular/core";
-import {BehaviorSubject} from "rxjs/Rx";
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild} from "@angular/core";
+import {BehaviorSubject, Subscription} from "rxjs/Rx";
 import {map} from "rxjs/internal/operators";
 
 @Component({
   selector: 'app-ticket-list',
   templateUrl: './ticket-list.component.html',
   styleUrls: ['./ticket-list.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TicketListComponent implements OnInit, AfterViewInit {
-  tickets$: Observable<any>;
+export class TicketListComponent implements OnInit, OnDestroy, AfterViewInit {
+
+  tickets: any;
   @ViewChild('searchInput') searchInput: ElementRef;
   private filteredText$ = new BehaviorSubject<string>(null);
+  private ticketsSubscription: Subscription;
+  private isLoggedin: boolean;
+  private isLoggedinSubscription: Subscription;
 
   constructor(private _ticketService: TicketService,
-              public userService: UserService) {
+              userService: UserService,
+              private cdr: ChangeDetectorRef,) {
+    this.isLoggedinSubscription = userService.isLoggedIn$.subscribe(
+      isLoggedin => this.isLoggedin = isLoggedin
+    );
   }
 
   ngAfterViewInit(): void {
@@ -32,10 +39,11 @@ export class TicketListComponent implements OnInit, AfterViewInit {
         console.log(this.filteredText$.value);
       }
     );
+    this.cdr.detach();
   }
 
   ngOnInit() {
-    this.tickets$ = this._ticketService.getAllTickets().flatMap(
+    this.ticketsSubscription = this._ticketService.getAllTickets().flatMap(
       tickets => {
         return this.filteredText$.map(
           filterText => {
@@ -51,6 +59,15 @@ export class TicketListComponent implements OnInit, AfterViewInit {
           }
         );
       }
+    ).subscribe(
+      tickets => {
+        this.tickets = tickets;
+        this.cdr.detectChanges();
+      }
     );
+  }
+  ngOnDestroy(): void {
+    this.ticketsSubscription.unsubscribe();
+    this.isLoggedinSubscription.unsubscribe();
   }
 }
