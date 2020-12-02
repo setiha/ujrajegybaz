@@ -67,7 +67,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   }
 
 
-  /*delete() {
+  delete() {
     this._eventService.delete(this.event).pipe()
       .subscribe(
         () => this.navigateBack(),
@@ -76,7 +76,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
         }
       );
   }
-*/
+
   navigateBack() {
     this._location.back();
   }

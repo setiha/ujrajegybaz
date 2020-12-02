@@ -3,10 +3,9 @@ import {UserService} from "../shared/user.service";
 import {Observable} from "rxjs/Rx";
 import {AngularFireDatabase} from "angularfire2/database";
 import {ChatMessageModel} from "./model/chat.model";
-import * as moment from 'moment';
+import * as moment from "moment";
 import "rxjs-compat/add/operator/switchMap";
 import "rxjs-compat/add/operator/map";
-import {stringify} from "@angular/compiler/src/util";
 @Injectable({
   providedIn: 'root'
 })
@@ -55,9 +54,15 @@ export class ChatService {
       .map(
         list =>
           list.map(
-            chatMessage =>
-              new ChatMessageModel(Object.assign(chatMessage, {$id: chatMessage.$key}))
+            (chatMessage, index) =>
+              new ChatMessageModel(Object.assign(chatMessage, {$id: this.chaTT(roomId, index)}))
           )
       );
   }
+
+  chaTT(roomId, index) {
+    this.afDb.list<ChatMessageModel>(`${ChatService.PATH}/${roomId}`).snapshotChanges().map(
+      chat => chat[index].key);
+  }
+
 }

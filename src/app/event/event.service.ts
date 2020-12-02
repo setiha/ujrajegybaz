@@ -27,8 +27,9 @@ export class EventService {
 
   save(param: EventModel) {
     if (param.id) {
+
       // update
-      return Observable.fromPromise(this.afDb.object(`events/`).update(param.id));
+      return Observable.fromPromise(this.afDb.object(`events/${param.id}`).update(param));
     } else {
       param.id = this.proba ++;
       return Observable.fromPromise(this.afDb.object(`events/${param.id}`).set(param));

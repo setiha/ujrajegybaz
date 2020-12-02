@@ -23,7 +23,7 @@ export class EventListComponent implements OnInit, AfterViewInit, OnDestroy {
   private filteredText$ = new BehaviorSubject<any>(null);
   private eventSubscription: Subscription;
   private isLoggedInSubscription: Subscription;
-  private isLoggedIn: boolean;
+  isLoggedIn: boolean;
 
 
   constructor(private _eventService: EventService,

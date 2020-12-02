@@ -16,14 +16,14 @@ export class TicketListComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('searchInput') searchInput: ElementRef;
   private filteredText$ = new BehaviorSubject<string>(null);
   private ticketsSubscription: Subscription;
-  private isLoggedin: boolean;
+  isLoggedIn: boolean;
   private isLoggedinSubscription: Subscription;
 
   constructor(private _ticketService: TicketService,
               userService: UserService,
               private cdr: ChangeDetectorRef,) {
     this.isLoggedinSubscription = userService.isLoggedIn$.subscribe(
-      isLoggedin => this.isLoggedin = isLoggedin
+      isLoggedin => this.isLoggedIn = isLoggedin
     );
   }
 

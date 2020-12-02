@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Subject } from 'rxjs/Subject';
-import { UserModel } from '../../shared/user-model';
-import { UserService } from '../../shared/user.service';
+import {Component, OnDestroy, OnInit} from "@angular/core";
+import {Router} from "@angular/router";
+import {Subject} from "rxjs/Subject";
+import {UserModel} from "../../shared/user-model";
+import {UserService} from "../../shared/user.service";
 
 @Component({
   selector: 'app-profile-edit',
@@ -15,10 +15,8 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
 
   private _destroy$ = new Subject();
 
-  constructor(
-    private _userService: UserService,
-    private _router: Router
-  ) {
+  constructor(private _userService: UserService,
+              private _router: Router) {
   }
 
   ngOnInit() {
@@ -40,7 +38,9 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
 
 
   updateUser() {
-    this._userService.save(this.user);
+    this._userService.save(this.user).then(
+      next => this._goToProfile()
+    );
   }
 
   createUser(pass: string) {
