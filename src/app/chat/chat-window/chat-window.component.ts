@@ -1,13 +1,16 @@
 import {
-  AfterViewChecked, ChangeDetectionStrategy, Component, ElementRef, Input, OnInit,
+  AfterViewChecked,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  HostBinding,
+  Input,
+  OnInit,
   ViewChild
 } from "@angular/core";
-import {environment} from "../../../environments/environment";
-import {MockedChatDatas} from "../mocked-chat.service";
-import {Observable} from "rxjs/Rx";
 import {ChatMessageModel} from "../model/chat.model";
 import {ChatService} from "../chat.service";
-
+import {faCaretDown, faCaretUp} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-chat-window',
@@ -17,21 +20,31 @@ import {ChatService} from "../chat.service";
   providers: [ChatService]
 })
 export class ChatWindowComponent implements OnInit, AfterViewChecked {
+  faCaretDown = faCaretDown;
+  faCaretUp = faCaretUp;
   @Input() roomId;
   resetForm = false;
   chatMessage$ // : Observable<ChatMessageModel[]>;
   @ViewChild('cardBody') cardBody: ElementRef;
-  private shouldScrolling = true;
+  private shouldScrolling = false;
+  collapseBody: boolean;
+  @HostBinding('style.height') height = '100%';
 
   constructor(private chatService: ChatService) {
   }
 
   ngOnInit(): void {
     this.chatMessage$ = this.chatService.getRoomMessages(this.roomId);
+    this.chatMessage$.first().delay(300).subscribe(
+      () => {
+        this.shouldScrolling = true;
+        this.ngAfterViewChecked();
+      }
+    );
   }
 
   ngAfterViewChecked(): void {
-    if (this.shouldScrolling){
+    if (this.shouldScrolling) {
       this.cardBody.nativeElement.scrollTo(0, this.cardBody.nativeElement.scrollHeight);
       this.shouldScrolling = false;
     }
@@ -48,7 +61,17 @@ export class ChatWindowComponent implements OnInit, AfterViewChecked {
         }
       });
   }
-  trackByMessages(index: number, model: ChatMessageModel){
+
+  trackByMessages(index: number, model: ChatMessageModel) {
     return model.$id;
+  }
+
+   collapseChat() {
+    this.collapseBody = !this.collapseBody;
+    if (this.collapseBody) {
+      this.height = null;
+    } else {
+      this.height = '100%';
+    }
   }
 }

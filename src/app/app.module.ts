@@ -34,6 +34,7 @@ import {ChatModule} from "./chat/chat.module";
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import {FaIconComponent, FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 @NgModule({
   declarations: [
@@ -59,7 +60,9 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
     ChatModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    FontAwesomeModule,
+
 
 
   ],

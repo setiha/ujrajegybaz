@@ -11,6 +11,7 @@ import {CoreModule} from "../core/core.module";
 import { ChatMessageRowComponent } from './chat-message-row/chat-message-row.component';
 import { ChatMessageSendFormComponent } from './chat-message-send-form/chat-message-send-form.component';
 import {MomentModule} from "angular2-moment";
+import {FaIconLibrary, FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 export const chatServiceProvideFactoryFn = (userService: UserService) => {
   return environment.production ?
@@ -24,7 +25,8 @@ export const chatServiceProvideFactoryFn = (userService: UserService) => {
     CommonModule,
     ReactiveFormsModule,
     CoreModule,
-    MomentModule
+    MomentModule,
+    FontAwesomeModule,
 
   ],
   exports: [

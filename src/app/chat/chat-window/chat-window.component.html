@@ -1,13 +1,20 @@
 <div class="card">
-  <div class="card-header">
+  <div class="card-header clearfix">
     Chat
+    <button class="btn btn-light float-right" (click)="collapseChat()">
+      <fa-icon [icon]="faCaretDown" *ngIf="!collapseBody; else showUpIcon"></fa-icon>
+      <ng-template #showUpIcon>
+        <fa-icon [icon]="faCaretUp" *ngIf="collapseBody"></fa-icon>
+      </ng-template>
+    </button>
   </div>
-  <div class="card-body" #cardBody>
+  <div class="card-body" #cardBody *ngIf="!collapseBody">
 
     <ng-container *ngIf="chatMessage$ | async as chatMessage; else loadingChat">
       <ng-container *ngIf="chatMessage.length > 0; else notFoundMessage">
         <ul class="chat-messages-list">
-<app-chat-message-row [msg] ="msg" *ngFor="let msg of chatMessage; trackBy:trackByMessages"></app-chat-message-row>
+          <app-chat-message-row [msg]="msg"
+                                *ngFor="let msg of chatMessage; trackBy:trackByMessages"></app-chat-message-row>
         </ul>
       </ng-container>
       <ng-template #notFoundMessage>
@@ -18,9 +25,9 @@
       <app-loading-spinner [loaderWidth]="100" [loaderHeight]="100"></app-loading-spinner>
     </ng-template>
   </div>
-  <div class="card-footer">
-<app-chat-message-send-form
-  [(reset)] = "resetForm"
-  (newMessage)="onNewMessage($event)"></app-chat-message-send-form>
+  <div class="card-footer" *ngIf="!collapseBody">
+    <app-chat-message-send-form
+      [(reset)]="resetForm"
+      (newMessage)="onNewMessage($event)"></app-chat-message-send-form>
   </div>
 </div>

@@ -1,4 +1,4 @@
-import * as firebase from "firebase";
+
 import {AngularFireDatabase} from "angularfire2/database";
 import {Injectable} from "@angular/core";
 import {EventService} from "../event/event.service";
@@ -88,10 +88,10 @@ export class TicketService {
     return Observable.fromPromise(this.afDb.list<TicketModel>('tickets').push(ticket))
       .map(resp => resp.key
       )
-      .do(
-        ticketId => Observable.combineLatest(
+      .do
+      ( ticketId => Observable.combineLatest(
           this._eventService.addTicket(ticket.eventId, ticketId),
-          this._userService.addTicket(ticketId)
+          this._userService.addTicket(ticketId),
         )
       );
   }
