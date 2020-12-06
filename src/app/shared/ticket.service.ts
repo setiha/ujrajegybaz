@@ -1,4 +1,3 @@
-
 import {AngularFireDatabase} from "angularfire2/database";
 import {Injectable} from "@angular/core";
 import {EventService} from "../event/event.service";
@@ -16,10 +15,9 @@ import "rxjs-compat/add/observable/combineLatest";
 import "rxjs-compat/add/operator/map";
 
 import {Observable} from "rxjs/Rx";
-import {any} from "codelyzer/util/function";
 @Injectable()
 export class TicketService {
-
+tickId;
   constructor(private _eventService: EventService,
               private _userService: UserService,
               private afDb: AngularFireDatabase) {
@@ -46,6 +44,7 @@ export class TicketService {
   // -----
   // puffancs uzeni: "elkepzelheto", hogy egyszerubb megoldas is van, de szerintem ez szep
   //                 es mar nagyon vagytam valami agyzsibbasztora a projektben :)
+
   getAllTickets() {
     return this.afDb.list<TicketModel>('tickets').valueChanges()
       .map(ticketsArray => ticketsArray.map(ticket =>
@@ -85,13 +84,15 @@ export class TicketService {
   }
 
   create(ticket: TicketModel) {
+
     return Observable.fromPromise(this.afDb.list<TicketModel>('tickets').push(ticket))
       .map(resp => resp.key
       )
       .do
-      ( ticketId => Observable.combineLatest(
-          this._eventService.addTicket(ticket.eventId, ticketId),
-          this._userService.addTicket(ticketId),
+      (ticketId => Observable.combineLatest(
+        this._eventService.addTicket(ticket.eventId, ticketId),
+        this._userService.addTicket(ticketId),
+        this.afDb.object(`tickets/${ticketId}`).update({id: ticketId}),
         )
       );
   }
@@ -100,3 +101,4 @@ export class TicketService {
     return Observable.fromPromise(this.afDb.object(`tickets/${ticket.id}`).update(ticket));
   }
 }
+

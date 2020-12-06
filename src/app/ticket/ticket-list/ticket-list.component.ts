@@ -65,7 +65,9 @@ export class TicketListComponent implements OnInit, OnDestroy, AfterViewInit {
         this.cdr.detectChanges();
       }
     );
+
   }
+
   ngOnDestroy(): void {
     this.ticketsSubscription.unsubscribe();
     this.isLoggedinSubscription.unsubscribe();
