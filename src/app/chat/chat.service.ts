@@ -10,7 +10,7 @@ import "rxjs-compat/add/operator/map";
   providedIn: 'root'
 })
 export class ChatService {
-  private static PATH = 'chat/ticket_room';
+  private static PATH = 'chat';
 
   constructor(protected userService: UserService,
               @Optional() protected afDb?: AngularFireDatabase) {

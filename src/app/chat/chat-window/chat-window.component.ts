@@ -3,14 +3,16 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  EventEmitter,
   HostBinding,
   Input,
   OnInit,
+  Output,
   ViewChild
 } from "@angular/core";
 import {ChatMessageModel} from "../model/chat.model";
 import {ChatService} from "../chat.service";
-import {faCaretDown, faCaretUp} from "@fortawesome/free-solid-svg-icons";
+import {faCaretDown, faCaretUp, faWindowClose} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-chat-window',
@@ -20,11 +22,16 @@ import {faCaretDown, faCaretUp} from "@fortawesome/free-solid-svg-icons";
   providers: [ChatService]
 })
 export class ChatWindowComponent implements OnInit, AfterViewChecked {
+  @Input() id: string;
+  @Input() roomId;
+  @Input() title: string;
+  @Input() closeable = false;
+  @Output() CloseW = new EventEmitter<void>();
   faCaretDown = faCaretDown;
   faCaretUp = faCaretUp;
-  @Input() roomId;
+  faClose = faWindowClose;
   resetForm = false;
-  chatMessage$ // : Observable<ChatMessageModel[]>;
+  chatMessage$; // : Observable<ChatMessageModel[]>;
   @ViewChild('cardBody') cardBody: ElementRef;
   private shouldScrolling = false;
   collapseBody: boolean;
@@ -66,12 +73,16 @@ export class ChatWindowComponent implements OnInit, AfterViewChecked {
     return model.$id;
   }
 
-   collapseChat() {
+  collapseChat() {
     this.collapseBody = !this.collapseBody;
     if (this.collapseBody) {
       this.height = null;
     } else {
       this.height = '100%';
     }
+  }
+
+  closeWindow() {
+    this.CloseW.emit();
   }
 }

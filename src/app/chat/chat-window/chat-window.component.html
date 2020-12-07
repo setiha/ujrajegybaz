@@ -1,6 +1,9 @@
 <div class="card">
   <div class="card-header clearfix">
-    Chat
+    {{title}}
+    <button class="btn btn-light float-right" (click) = "closeWindow()" *ngIf="closeable">
+      <fa-icon [icon] = "faClose"></fa-icon>
+    </button>
     <button class="btn btn-light float-right" (click)="collapseChat()">
       <fa-icon [icon]="faCaretDown" *ngIf="!collapseBody; else showUpIcon"></fa-icon>
       <ng-template #showUpIcon>
