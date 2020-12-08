@@ -3,7 +3,6 @@ import {BehaviorSubject} from "rxjs/Rx";
 import {ChatWindowConfig} from "../model/chat-window-config";
 
 
-
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
@@ -11,12 +10,12 @@ import {ChatWindowConfig} from "../model/chat-window-config";
 })
 export class ChatComponent implements OnInit {
   windows$ = new BehaviorSubject<ChatWindowConfig[]>([]);
-
   constructor() {
   }
 
   ngOnInit(): void {
-this.openChat({title: 'testablak', roomId: 'testelo'});
+    this.openChat({title: 'testablak', roomId: 'testelo'});
+    this.openChat({title: 'testablak', roomId: 'testelo2'});
   }
 
   openChat(config: ChatWindowConfig) {
@@ -24,7 +23,7 @@ this.openChat({title: 'testablak', roomId: 'testelo'});
       //default
       config.id = `${config.roomId}${new Date().getTime()}`;
     }
-    if (config.closeable == null){
+    if (config.closeable == null) {
       //default
       config.closeable = true;
     }
@@ -37,7 +36,7 @@ this.openChat({title: 'testablak', roomId: 'testelo'});
   removeChat(id: string) {
     const windows = this.windows$.getValue();
     const configIndex = windows.findIndex(config => config.id === id);
-    if (configIndex > -1){
+    if (configIndex > -1) {
       windows.splice(configIndex, 1);
       this.windows$.next(windows);
     }

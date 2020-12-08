@@ -38,9 +38,9 @@ export class ChatMessageSendFormComponent implements OnInit, OnChanges {
 
   set disabled(value: boolean) {
     this._disabled = value;
-    if (value === true){
+    if (value === true) {
       this.form.get('chat-message').disable();
-    }else{
+    } else {
       this.form.get('chat-message').enable();
     }
   }
@@ -50,7 +50,6 @@ export class ChatMessageSendFormComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['reset'] != null && changes['reset'].isFirstChange() === false && changes['reset'].currentValue === true) {
-
       this.disabled = false;
       this.form.reset({'chat-message': null});
       this.chatMessageInput.nativeElement.focus();
@@ -82,7 +81,6 @@ export class ChatMessageSendFormComponent implements OnInit, OnChanges {
       this.disabled = true;
       this.resetChange.emit(false);
       this.newMessage.emit(this.form.value['chat-message']);
-
     }
   }
 }

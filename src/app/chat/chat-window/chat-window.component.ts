@@ -27,6 +27,7 @@ export class ChatWindowComponent implements OnInit, AfterViewChecked {
   @Input() title: string;
   @Input() closeable = false;
   @Output() CloseW = new EventEmitter<void>();
+  @Input() @HostBinding(`class.floating`) floating = true;
   faCaretDown = faCaretDown;
   faCaretUp = faCaretUp;
   faClose = faWindowClose;
