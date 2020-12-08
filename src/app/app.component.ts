@@ -1,4 +1,6 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {UserService} from "./shared/user.service";
+import {ReplaySubject} from "rxjs/Rx";
 
 
 @Component({
@@ -7,5 +9,13 @@ import {ChangeDetectionStrategy, Component} from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'jegybaz';
+   isLoggedIn$: ReplaySubject<boolean>;
+
+  constructor(
+
+    userService: UserService
+  )
+  {
+    this.isLoggedIn$ = userService.isLoggedIn$
+  }
 }
