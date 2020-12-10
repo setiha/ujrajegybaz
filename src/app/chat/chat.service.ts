@@ -6,6 +6,8 @@ import {ChatMessageModel} from "./model/chat.model";
 import * as moment from "moment";
 import "rxjs-compat/add/operator/switchMap";
 import "rxjs-compat/add/operator/map";
+import "rxjs-compat/add/operator/first";
+import {ChatFriendModel} from "./model/chat-friend-model";
 @Injectable({
   providedIn: 'root'
 })
@@ -26,7 +28,7 @@ export class ChatService {
               room.push(
                 new ChatMessageModel({
                   $id: '',
-                  msg: msg,
+                  msg,
                   userId: user.id,
                   userName: user.name,
                   userPictureUrl: user.profilePictureUrl,
@@ -65,4 +67,21 @@ export class ChatService {
       chat => chat[index].key);
   }
 
+  getMyFriendList(): Observable<ChatFriendModel[]> {
+    return this.userService.getCurrentUser().first().switchMap(
+      user => {
+        return this.afDb.list<ChatFriendModel>(`${ChatService.PATH}/friend_list/${user.id}`).valueChanges().map(
+          friends => friends.map(
+            friend => new ChatFriendModel(Object.assign(friend, {$id: friend.userId}))
+          )
+        );
+      }
+    );
+  }
+
+  getAllFriend() {
+    return this.afDb.list(`${ChatService.PATH}/friend_list/${'G6ma0bAgwRMwmbs0eIbV3hy9cbw1'}`).snapshotChanges().subscribe(
+      data => data.map(elem => console.log(elem.key))
+    );
+  }
 }

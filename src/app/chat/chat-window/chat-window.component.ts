@@ -19,7 +19,7 @@ import {faCaretDown, faCaretUp, faWindowClose} from "@fortawesome/free-solid-svg
   templateUrl: './chat-window.component.html',
   styleUrls: ['./chat-window.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [ChatService]
+
 })
 export class ChatWindowComponent implements OnInit, AfterViewChecked {
   @Input() id: string;

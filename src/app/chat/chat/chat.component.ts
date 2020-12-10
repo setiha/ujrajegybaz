@@ -1,22 +1,25 @@
 import {ChangeDetectionStrategy, Component, OnInit} from "@angular/core";
 import {BehaviorSubject} from "rxjs/Rx";
 import {ChatWindowConfig} from "../model/chat-window-config";
+import {ChatService} from "../chat.service";
+import {UserService} from "../../shared/user.service";
 
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ChatService]
 })
 export class ChatComponent implements OnInit {
   windows$ = new BehaviorSubject<ChatWindowConfig[]>([]);
-  constructor() {
+  constructor(private userService: UserService) {
   }
 
   ngOnInit(): void {
-    this.openChat({title: 'testablak', roomId: 'testelo'});
-    this.openChat({title: 'testablak', roomId: 'testelo2'});
+    this.openChat({title: 'testablak', roomId: 'G6ma0bAgwRMwmbs0eIbV3hy9cbw1'});
+
   }
 
   openChat(config: ChatWindowConfig) {

@@ -13,7 +13,8 @@ import { ChatMessageSendFormComponent } from './chat-message-send-form/chat-mess
 import {MomentModule} from "angular2-moment";
 import {FaIconLibrary, FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import { ChatComponent } from './chat/chat.component';
-import { FriendListComponent } from './friend-list/friend-list.component';
+import { ChatFriendRowComponent } from './chat-friend-row/chat-friend-row.component';
+import {ChatFriendListComponent} from "./chat-friend-list/chat-friend-list.component";
 
 export const chatServiceProvideFactoryFn = (userService: UserService) => {
   return environment.production ?
@@ -22,7 +23,7 @@ export const chatServiceProvideFactoryFn = (userService: UserService) => {
 };
 
 @NgModule({
-  declarations: [ChatWindowComponent, ChatMessageRowComponent, ChatMessageSendFormComponent, ChatComponent, FriendListComponent],
+  declarations: [ChatWindowComponent, ChatMessageRowComponent, ChatMessageSendFormComponent, ChatComponent, ChatFriendListComponent, ChatFriendRowComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -32,7 +33,6 @@ export const chatServiceProvideFactoryFn = (userService: UserService) => {
 
   ],
   exports: [
-    ChatWindowComponent,
     ChatComponent
   ]
 })
