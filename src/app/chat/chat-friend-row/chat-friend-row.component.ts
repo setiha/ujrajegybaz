@@ -9,7 +9,7 @@ import {ChatFriendModel} from "../model/chat-friend-model";
 export class ChatFriendRowComponent implements OnInit {
 @Input() friend: ChatFriendModel;
 @HostBinding('class.clearfix') classClearfix = true;
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
 
