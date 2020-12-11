@@ -72,16 +72,21 @@ export class ChatService {
       user => {
         return this.afDb.list<ChatFriendModel>(`${ChatService.PATH}/friend_list/${user.id}`).valueChanges().map(
           friends => friends.map(
-            friend => new ChatFriendModel(Object.assign(friend, {$id: friend.userId}))
+            (friend, index) => new ChatFriendModel(Object.assign(friend, {$id: this.getAllFriend(index)}))
           )
         );
       }
     );
   }
 
-  getAllFriend() {
-    return this.afDb.list(`${ChatService.PATH}/friend_list/${'G6ma0bAgwRMwmbs0eIbV3hy9cbw1'}`).snapshotChanges().subscribe(
-      data => data.map(elem => console.log(elem.key))
+  getAllFriend(index): any {
+   return this.userService.getCurrentUser().first().switchMap(
+      user => {
+        return this.afDb.list<ChatFriendModel>(`${ChatService.PATH}/friend_list/${user.id}`).snapshotChanges().map(
+          friend => friend[index].key
+        )
+      }
     );
   }
+
 }

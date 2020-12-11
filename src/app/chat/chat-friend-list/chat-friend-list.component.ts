@@ -16,8 +16,7 @@ export class ChatFriendListComponent implements OnInit {
 
   ngOnInit(): void {
     this.friendList$ = this.chatService.getMyFriendList();
-    this.friendList$.subscribe(data => console.log(data));
-    this.chatService.getAllFriend();
+    this.chatService.getAllFriend(0).subscribe(data => console.log(data));
   }
 
 }
