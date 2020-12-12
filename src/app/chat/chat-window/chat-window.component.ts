@@ -86,4 +86,5 @@ export class ChatWindowComponent implements OnInit, AfterViewChecked {
   closeWindow() {
     this.CloseW.emit();
   }
+
 }
