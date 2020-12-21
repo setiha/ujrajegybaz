@@ -19,7 +19,7 @@ import {AngularFireDatabase} from "angularfire2/database";
 export class UserService {
   isLoggedIn$ = new ReplaySubject<boolean>(1);
 
-  private _user = new ReplaySubject<any>(1);
+  _user = new ReplaySubject<any>(1);
 
   constructor(private _router: Router,
               // private _http: HttpClient

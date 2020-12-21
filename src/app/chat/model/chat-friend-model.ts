@@ -3,6 +3,7 @@ export class ChatFriendModel {
   name: string;
   profilePictureUrl: string;
 
+
   constructor(data?: ChatFriendModel) {
     if (data != null) {
       Object.assign(this, data);

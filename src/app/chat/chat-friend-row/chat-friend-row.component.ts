@@ -1,6 +1,16 @@
-import {AfterViewInit, ChangeDetectorRef, Component, HostBinding, HostListener, Input, OnInit} from "@angular/core";
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  HostBinding,
+  HostListener,
+  Input,
+  Output
+} from "@angular/core";
 import {ChatFriendModel} from "../model/chat-friend-model";
 import {Subject} from "rxjs/Rx";
+import {ChatService} from "../chat.service";
 
 @Component({
   selector: 'app-chat-friend-row',
@@ -13,8 +23,10 @@ export class ChatFriendRowComponent implements AfterViewInit {
   @HostBinding('class.text-muted') classTextMuted = true;
   @HostBinding('class.focused') classFocused = false;
   private focus$ = new Subject<boolean>();
+  @Output() Select = new EventEmitter<ChatFriendModel>();
 
-  constructor(private cdr: ChangeDetectorRef) {
+  constructor(private cdr: ChangeDetectorRef,
+              private chatService: ChatService) {
     this.focus$.subscribe(
       value => {
         if (value !== this.classTextMuted) {
@@ -38,14 +50,16 @@ export class ChatFriendRowComponent implements AfterViewInit {
     $event.preventDefault();
     this.focus$.next(true);
   }
+
   @HostListener('click', ['$event'])
   onHostClick($event) {
     $event.stopPropagation();
     $event.preventDefault();
-    console.log('click');
+    this.Select.emit(this.friend);
+    console.log(this.friend);
   }
 
   ngAfterViewInit(): void {
-this.cdr.detach();
+    this.cdr.detach();
   }
 }

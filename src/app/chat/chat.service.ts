@@ -12,10 +12,16 @@ import {ChatFriendModel} from "./model/chat-friend-model";
   providedIn: 'root'
 })
 export class ChatService {
-  private static PATH = 'chat';
+  static PATH = 'chat';
+  user = this.userService._user;
+  userId;
+  friendId;
 
   constructor(protected userService: UserService,
               @Optional() protected afDb?: AngularFireDatabase) {
+    this.user.subscribe(data => this.userId = data);
+    console.log(this.userId.id);
+
   }
 
   addMessage(roomId: string, msg: string): Observable<boolean> {
@@ -52,27 +58,29 @@ export class ChatService {
   }
 
   getRoomMessages(roomId: string) {
-    return this.afDb.list<ChatMessageModel>(`${ChatService.PATH}/${roomId}`).valueChanges()
-      .map(
-        list =>
-          list.map(
-            (chatMessage, index) =>
-              new ChatMessageModel(Object.assign(chatMessage, {$id: this.chaTT(roomId, index)}))
-          )
-      );
+    const mess = [];
+    return this.afDb.list<ChatMessageModel>(`${ChatService.PATH}/${roomId}`).snapshotChanges().map(
+      (chat, index) => chat.forEach(elem => mess.push(elem.key))).switchMap(data => {
+        return this.afDb.list<ChatMessageModel>(`${ChatService.PATH}/${roomId}`).valueChanges()
+          .map(
+            list =>
+              list.map(
+                (chatMessage, index) =>
+                  new ChatMessageModel(Object.assign(chatMessage, {$id: mess[index]}))
+              )
+          );
+      }
+    );
   }
 
-  chaTT(roomId, index) {
-    this.afDb.list<ChatMessageModel>(`${ChatService.PATH}/${roomId}`).snapshotChanges().map(
-      chat => chat[index].key);
-  }
 
   getMyFriendList(): Observable<ChatFriendModel[]> {
-    return this.userService.getCurrentUser().first().switchMap(
-      user => {
-        return this.afDb.list<ChatFriendModel>(`${ChatService.PATH}/friend_list/${user.id}`).valueChanges().map(
+    const el = [];
+    return this.afDb.list<ChatFriendModel>(`chat_friend_list/${this.userId.id}`).snapshotChanges().map(
+      (fr, index) => fr.forEach(elem => el.push(elem.key))).switchMap(data => {
+        return this.afDb.list<ChatFriendModel>(`chat_friend_list/${this.userId.id}`).valueChanges().map(
           friends => friends.map(
-            (friend, index) => new ChatFriendModel(Object.assign(friend, {$id: this.getAllFriend(index)}))
+            (friend, index) => new ChatFriendModel(Object.assign(friend, {$id: el[index]}))
           )
         );
       }
@@ -80,13 +88,8 @@ export class ChatService {
   }
 
   getAllFriend(index): any {
-   return this.userService.getCurrentUser().first().switchMap(
-      user => {
-        return this.afDb.list<ChatFriendModel>(`${ChatService.PATH}/friend_list/${user.id}`).snapshotChanges().map(
-          friend => friend[index].key
-        )
-      }
+    return this.afDb.list<ChatFriendModel>(`${ChatService.PATH}/friend_list/${this.userId.id}`).snapshotChanges().map(
+      friend => friend[index].key
     );
   }
-
 }

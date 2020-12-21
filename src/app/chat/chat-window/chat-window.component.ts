@@ -43,6 +43,7 @@ export class ChatWindowComponent implements OnInit, AfterViewChecked {
 
   ngOnInit(): void {
     this.chatMessage$ = this.chatService.getRoomMessages(this.roomId);
+    this.chatMessage$.subscribe(data => console.log(data));
     this.chatMessage$.first().delay(300).subscribe(
       () => {
         this.shouldScrolling = true;

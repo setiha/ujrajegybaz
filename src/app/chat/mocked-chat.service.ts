@@ -61,7 +61,7 @@ export class MockedChatService extends ChatService{private rooms$ = new Behavior
       );
   }
 
-  getRoomMessages(roomId: string): Observable<ChatMessageModel[]> {
+  /*getRoomMessages(roomId: string): Observable<ChatMessageModel[]> {
     const rooms = this.rooms$.getValue();
     if (rooms[roomId] == null){
       //first init room
@@ -69,5 +69,5 @@ export class MockedChatService extends ChatService{private rooms$ = new Behavior
       this.rooms$.next(rooms);
     }
     return rooms[roomId].asObservable();
-  }
+  }*/
 }
