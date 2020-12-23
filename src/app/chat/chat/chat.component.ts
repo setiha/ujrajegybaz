@@ -19,11 +19,9 @@ export class ChatComponent  {
   windows$ = new BehaviorSubject<ChatWindowConfig[]>([]);
 
   constructor(private chatService: ChatService, private userService: UserService) {
-
   }
 
   openChat(config: ChatWindowConfig) {
-
     const windows = this.windows$.getValue();
 
     if (windows.find(frConfig => frConfig.roomId === `friend_list/${config.roomId}`)
@@ -55,10 +53,12 @@ export class ChatComponent  {
   onSelectFriend(friend: ChatFriendModel) {
     this.userService.getCurrentUser().subscribe(
       user => {
+        const roomIdd = `${user.id}/${friend.$id}`
         this.openChat({
-          title: friend.name, roomId: `${user.id}/${friend.$id}`,
+          title: friend.name, roomId: roomIdd,
           closeable: true, 'friend': friend
         });
+        this.chatService.addChatWait(roomIdd, friend);
       }
     );
   }

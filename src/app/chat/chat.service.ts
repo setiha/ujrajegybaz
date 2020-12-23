@@ -1,27 +1,30 @@
-import {Injectable, Optional} from "@angular/core";
-import {UserService} from "../shared/user.service";
-import {Observable} from "rxjs/Rx";
-import {AngularFireDatabase} from "angularfire2/database";
-import {ChatMessageModel} from "./model/chat.model";
-import * as moment from "moment";
-import "rxjs-compat/add/operator/switchMap";
-import "rxjs-compat/add/operator/map";
-import "rxjs-compat/add/operator/first";
-import {ChatFriendModel} from "./model/chat-friend-model";
+import {Injectable, Optional} from '@angular/core';
+import {UserService} from '../shared/user.service';
+import {Observable} from 'rxjs/Rx';
+import {AngularFireDatabase} from 'angularfire2/database';
+import {ChatMessageModel} from './model/chat.model';
+import * as moment from 'moment';
+import 'rxjs-compat/add/operator/switchMap';
+import 'rxjs-compat/add/operator/map';
+import 'rxjs-compat/add/operator/first';
+import {ChatFriendModel} from './model/chat-friend-model';
+import {ChatCallModel} from './model/chat-call.model';
+import {ReplaySubject} from 'rxjs/ReplaySubject';
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
   static PATH = 'chat';
   user = this.userService._user;
+  getCall = new ReplaySubject<any>();
   userId;
-  friendId;
+
 
   constructor(protected userService: UserService,
               @Optional() protected afDb?: AngularFireDatabase) {
     this.user.subscribe(data => this.userId = data);
     console.log(this.userId.id);
-
+    this.getCallWatcher().subscribe(data => console.log(data));
   }
 
   addMessage(roomId: string, msg: string): Observable<boolean> {
@@ -87,9 +90,36 @@ export class ChatService {
     );
   }
 
-  getAllFriend(index): any {
-    return this.afDb.list<ChatFriendModel>(`${ChatService.PATH}/friend_list/${this.userId.id}`).snapshotChanges().map(
-      friend => friend[index].key
-    );
+  addChatWait(roomId: string, friend: ChatFriendModel) {
+    this.userService.getCurrentUser().first()
+      .switchMap(
+        user => {
+          return Observable.fromPromise(this.afDb.object(`chat_wait/${friend.$id}/${user.id}`)
+            .set({
+              roomId: roomId,
+              friend: new ChatFriendModel(<ChatFriendModel> {
+                $id: user.id,
+                name: user.name,
+                profilePictureUrl: user.profilePictureUrl
+              })
+            }));
+        }
+      ).subscribe(data => data);
   }
+
+  getCallWatcher() {
+    const getChat = [];
+    return this.afDb.list(`chat_wait/${this.userId.id}`)
+      .snapshotChanges().map(calls => calls.map(call => getChat.push(call.key)))
+      .switchMap(data => {
+        return this.afDb.list<ChatCallModel>(`chat_wait/${this.userId.id}`)
+          .valueChanges().map(calls => calls
+            .map((call, index) => new ChatCallModel(
+              Object.assign(call, {
+                $id: getChat[index], friend: new ChatFriendModel(
+                  Object.assign(call.friend, {$id: getChat[index]}))
+              }))));
+      });
+  }
+
 }

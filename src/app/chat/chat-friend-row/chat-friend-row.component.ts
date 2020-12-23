@@ -57,6 +57,7 @@ export class ChatFriendRowComponent implements AfterViewInit {
     $event.preventDefault();
     this.Select.emit(this.friend);
     console.log(this.friend);
+    console.log($event);
   }
 
   ngAfterViewInit(): void {
