@@ -9,14 +9,12 @@ import 'rxjs-compat/add/operator/map';
 import 'rxjs-compat/add/operator/first';
 import {ChatFriendModel} from './model/chat-friend-model';
 import {ChatCallModel} from './model/chat-call.model';
-import {ReplaySubject} from 'rxjs/ReplaySubject';
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
   static PATH = 'chat';
   user = this.userService._user;
-  getCall = new ReplaySubject<any>();
   userId;
 
 
@@ -24,7 +22,6 @@ export class ChatService {
               @Optional() protected afDb?: AngularFireDatabase) {
     this.user.subscribe(data => this.userId = data);
     console.log(this.userId.id);
-    this.getCallWatcher().subscribe(data => console.log(data));
   }
 
   addMessage(roomId: string, msg: string): Observable<boolean> {
@@ -107,7 +104,7 @@ export class ChatService {
       ).subscribe(data => data);
   }
 
-  getCallWatcher() {
+  getChatCallWatcher() {
     const getChat = [];
     return this.afDb.list(`chat_wait/${this.userId.id}`)
       .snapshotChanges().map(calls => calls.map(call => getChat.push(call.key)))
@@ -122,4 +119,7 @@ export class ChatService {
       });
   }
 
+  removeWatcher(id: string) {
+    this.afDb.object(`chat_wait/${this.userId.id}/${id}`).remove().then();
+  }
 }

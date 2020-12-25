@@ -1,10 +1,10 @@
-import {ChangeDetectionStrategy, Component, OnInit} from "@angular/core";
-import {BehaviorSubject} from "rxjs/Rx";
-import {ChatWindowConfig} from "../model/chat-window-config";
-import {ChatService} from "../chat.service";
-import "rxjs-compat/add/operator/first";
-import {ChatFriendModel} from "../model/chat-friend-model";
-import {UserService} from "../../shared/user.service";
+import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {BehaviorSubject} from 'rxjs/Rx';
+import {ChatWindowConfig} from '../model/chat-window-config';
+import {ChatService} from '../chat.service';
+import 'rxjs-compat/add/operator/first';
+import {ChatFriendModel} from '../model/chat-friend-model';
+import {UserService} from '../../shared/user.service';
 
 
 @Component({
@@ -14,18 +14,32 @@ import {UserService} from "../../shared/user.service";
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ChatService]
 })
-export class ChatComponent  {
+export class ChatComponent {
 
   windows$ = new BehaviorSubject<ChatWindowConfig[]>([]);
 
   constructor(private chatService: ChatService, private userService: UserService) {
+    this.chatService.getChatCallWatcher().subscribe(
+      data => {
+        if (data != null && data.length > 0) {
+          data.forEach(
+            call => {
+              this.openChat(
+                {title: call.friend.name, roomId: call.roomId, friend: call.friend}
+              );
+              this.chatService.removeWatcher(call.friend.$id);
+            }
+          );
+        }
+      }
+    );
   }
 
   openChat(config: ChatWindowConfig) {
     const windows = this.windows$.getValue();
 
     if (windows.find(frConfig => frConfig.roomId === `friend_list/${config.roomId}`)
-     == null) {
+      == null) {
       if (config.id === null) {
         // default
         config.id = `${config.roomId}${new Date().getTime()}`;
