@@ -5,7 +5,7 @@ import {ChatService} from '../chat.service';
 import 'rxjs-compat/add/operator/first';
 import {ChatFriendModel} from '../model/chat-friend-model';
 import {UserService} from '../../shared/user.service';
-
+import {AngularFireDatabase} from 'angularfire2/database';
 
 @Component({
   selector: 'app-chat',
@@ -18,7 +18,7 @@ export class ChatComponent {
 
   windows$ = new BehaviorSubject<ChatWindowConfig[]>([]);
 
-  constructor(private chatService: ChatService, private userService: UserService) {
+  constructor(private chatService: ChatService, private userService: UserService, private afDb: AngularFireDatabase) {
     this.chatService.getChatCallWatcher().subscribe(
       data => {
         if (data != null && data.length > 0) {
@@ -37,9 +37,9 @@ export class ChatComponent {
 
   openChat(config: ChatWindowConfig) {
     const windows = this.windows$.getValue();
-
     if (windows.find(frConfig => frConfig.roomId === `friend_list/${config.roomId}`)
       == null) {
+      this.chatService.addChatWait(config.roomId, config.friend);
       if (config.id === null) {
         // default
         config.id = `${config.roomId}${new Date().getTime()}`;
@@ -67,13 +67,23 @@ export class ChatComponent {
   onSelectFriend(friend: ChatFriendModel) {
     this.userService.getCurrentUser().subscribe(
       user => {
-        const roomIdd = `${user.id}/${friend.$id}`
-        this.openChat({
-          title: friend.name, roomId: roomIdd,
-          closeable: true, 'friend': friend
-        });
-        this.chatService.addChatWait(roomIdd, friend);
-      }
-    );
+        let roomIdd = `${user.id}/${friend.$id}`;
+        this.afDb.object(`chat/friend_list/${roomIdd}`).valueChanges().subscribe(
+          room => {
+            if (room) {
+              this.openChat({
+                title: friend.name, roomId: roomIdd,
+                closeable: true, 'friend': friend
+              });
+            } else {
+              roomIdd = `${friend.$id}/${user.id}`;
+              this.openChat({
+                title: friend.name, roomId: roomIdd,
+                closeable: true, 'friend': friend
+              });
+            }
+          }
+        );
+      });
   }
 }
