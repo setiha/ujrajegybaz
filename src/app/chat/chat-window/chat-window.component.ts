@@ -1,6 +1,7 @@
 import {
   AfterViewChecked,
-  ChangeDetectionStrategy,
+  AfterViewInit,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -18,10 +19,9 @@ import {faCaretDown, faCaretUp, faWindowClose} from "@fortawesome/free-solid-svg
   selector: 'app-chat-window',
   templateUrl: './chat-window.component.html',
   styleUrls: ['./chat-window.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 
 })
-export class ChatWindowComponent implements OnInit, AfterViewChecked {
+export class ChatWindowComponent implements OnInit, AfterViewChecked, AfterViewInit {
   @Input() id: string;
   @Input() roomId;
   @Input() title: string;
@@ -38,7 +38,7 @@ export class ChatWindowComponent implements OnInit, AfterViewChecked {
   collapseBody: boolean;
   @HostBinding('style.height') height = '100%';
 
-  constructor(private chatService: ChatService) {
+  constructor(private chatService: ChatService, private cdr: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
@@ -47,11 +47,21 @@ export class ChatWindowComponent implements OnInit, AfterViewChecked {
     this.chatMessage$.first().delay(300).subscribe(
       () => {
         this.shouldScrolling = true;
+        this.cdr.detectChanges();
         this.ngAfterViewChecked();
       }
     );
   }
-
+  ngAfterViewInit(): void {
+    this.chatMessage$.subscribe(
+      () => {
+        this.shouldScrolling = true;
+        this.cdr.detectChanges();
+        this.ngAfterViewChecked();
+      }
+    );
+    this.cdr.detach();
+  }
   ngAfterViewChecked(): void {
     if (this.shouldScrolling) {
       this.cardBody.nativeElement.scrollTo(0, this.cardBody.nativeElement.scrollHeight);
@@ -63,8 +73,8 @@ export class ChatWindowComponent implements OnInit, AfterViewChecked {
     this.chatService.addMessage(this.roomId, newMessage)
       .subscribe(resp => {
         if (resp) {
-          this.shouldScrolling = true;
           this.resetForm = true;
+          this.cdr.detectChanges();
         } else {
           alert('hiba a chat uzenet kozben');
         }
