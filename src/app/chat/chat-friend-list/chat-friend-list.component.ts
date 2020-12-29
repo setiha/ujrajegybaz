@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from "@angular/core";
+import {Component, ChangeDetectionStrategy, EventEmitter, OnInit, Output} from "@angular/core";
 import {Observable} from "rxjs/Rx";
 import {ChatFriendModel} from "../model/chat-friend-model";
 import {ChatService} from "../chat.service";
@@ -6,7 +6,8 @@ import {ChatService} from "../chat.service";
 @Component({
   selector: 'app-chat-friend-list',
   templateUrl: './chat-friend-list.component.html',
-  styleUrls: ['./chat-friend-list.component.css']
+  styleUrls: ['./chat-friend-list.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChatFriendListComponent implements OnInit {
   friendList$: Observable<ChatFriendModel[]>;
@@ -17,6 +18,7 @@ export class ChatFriendListComponent implements OnInit {
 
   ngOnInit(): void {
     this.friendList$ = this.chatService.getMyFriendList();
+
   }
 
   onSelectFriend(friend: ChatFriendModel) {

@@ -9,6 +9,7 @@ import 'rxjs-compat/add/operator/map';
 import 'rxjs-compat/add/operator/first';
 import {ChatFriendModel} from './model/chat-friend-model';
 import {ChatCallModel} from './model/chat-call.model';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -97,7 +98,7 @@ export class ChatService {
               friend: new ChatFriendModel(<ChatFriendModel> {
                 $id: user.id,
                 name: user.name,
-                profilePictureUrl: user.profilePictureUrl
+                profilePictureUrl: user.profilePictureUrl, online: true, lastOnline: null
               })
             }));
         }
