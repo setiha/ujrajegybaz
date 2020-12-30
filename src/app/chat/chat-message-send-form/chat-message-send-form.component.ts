@@ -11,8 +11,8 @@ import {
   ViewChild
 } from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import "rxjs-compat/add/operator/distinctUntilChanged";
-import "rxjs-compat/add/operator/skip";
+import { distinctUntilChanged } from 'rxjs/operators';
+import { skip } from 'rxjs/operators';
 
 
 @Component({

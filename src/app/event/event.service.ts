@@ -1,11 +1,9 @@
 import {Injectable} from "@angular/core";
 import {EventModel} from "../shared/event-model";
-import "rxjs/add/operator/map";
-import "rxjs/add/operator/switchMap";
+import { switchMap } from 'rxjs/operators';
 import {AngularFireDatabase} from "angularfire2/database";
-import {map} from "rxjs/internal/operators";
-import "rxjs-compat/add/observable/fromPromise";
-import {Observable} from "rxjs/Rx";
+import {map} from "rxjs/operators";
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })

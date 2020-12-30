@@ -11,7 +11,7 @@ import {
   OnChanges
 } from "@angular/core";
 import {ChatFriendModel} from "../model/chat-friend-model";
-import {Subject} from "rxjs/Rx";
+import { Subject } from 'rxjs';
 import {ChatService} from "../chat.service";
 import { Subscription } from 'rxjs/Subscription';
 import * as moment from 'moment';

@@ -62,6 +62,7 @@ import {FaIconComponent, FontAwesomeModule} from "@fortawesome/angular-fontaweso
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     FontAwesomeModule,
+    AboutModule
 
 
 

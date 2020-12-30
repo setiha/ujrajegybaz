@@ -1,7 +1,7 @@
 import {Location} from "@angular/common";
 import {Component, OnDestroy, OnInit} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
-import {Subject} from "rxjs/Subject";
+import { Subject } from 'rxjs';
 import {EventModel} from "../../shared/event-model";
 import {EventService} from "../event.service";
 import {UserService} from "../../shared/user.service";

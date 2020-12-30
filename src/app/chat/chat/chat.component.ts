@@ -1,11 +1,11 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {BehaviorSubject} from 'rxjs/Rx';
+import { BehaviorSubject } from 'rxjs';
 import {ChatWindowConfig} from '../model/chat-window-config';
 import {ChatService} from '../chat.service';
-import 'rxjs-compat/add/operator/first';
 import {ChatFriendModel} from '../model/chat-friend-model';
 import {UserService} from '../../shared/user.service';
 import {AngularFireDatabase} from 'angularfire2/database';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-chat',
