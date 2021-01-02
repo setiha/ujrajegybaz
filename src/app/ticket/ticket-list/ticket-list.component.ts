@@ -1,4 +1,4 @@
-///<reference path="../../../../node_modules/rxjs-compat/add/observable/fromEvent.d.ts"/>
+
 import { Observable} from 'rxjs';
 import {TicketService} from '../../shared/ticket.service';
 import {UserService} from '../../shared/user.service';
