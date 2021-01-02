@@ -13,7 +13,7 @@ import {
 import {ChatFriendModel} from "../model/chat-friend-model";
 import { Subject } from 'rxjs';
 import {ChatService} from "../chat.service";
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import * as moment from 'moment';
 import { timer } from 'rxjs';
 

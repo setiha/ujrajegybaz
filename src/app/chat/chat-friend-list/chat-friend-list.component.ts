@@ -1,5 +1,5 @@
 import {Component, ChangeDetectionStrategy, EventEmitter, OnInit, Output} from "@angular/core";
-import {Observable} from "rxjs/Rx";
+import { Observable } from 'rxjs';
 import {ChatFriendModel} from "../model/chat-friend-model";
 import {ChatService} from "../chat.service";
 

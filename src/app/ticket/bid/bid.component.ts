@@ -3,7 +3,7 @@ import {TicketService} from "../../shared/ticket.service";
 import {TicketModel} from "../../shared/ticket-model";
 import {UserService} from "../../shared/user.service";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
-import {Observable, Subscription} from "rxjs/Rx";
+import {Observable, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-bid',

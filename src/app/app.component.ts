@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {UserService} from "./shared/user.service";
-import {ReplaySubject} from "rxjs/Rx";
+import {ReplaySubject} from "rxjs";
 
 
 @Component({

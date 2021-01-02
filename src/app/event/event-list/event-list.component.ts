@@ -2,10 +2,9 @@ import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnIn
 import {EventService} from "../event.service";
 import {UserService} from "../../shared/user.service";
 
-import {Observable} from "rxjs/Observable";
-import {BehaviorSubject, Subscription} from "rxjs/Rx";
-import "rxjs-compat/add/operator/map";
-import {map} from "rxjs/operators";
+import { Observable } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 import {EventModel} from "../../shared/event-model";
 
 

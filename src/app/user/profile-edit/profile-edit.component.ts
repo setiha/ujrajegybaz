@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
-import {Subject} from "rxjs/Subject";
+import { Subject } from 'rxjs';
 import {UserModel} from "../../shared/user-model";
 import {UserService} from "../../shared/user.service";
 

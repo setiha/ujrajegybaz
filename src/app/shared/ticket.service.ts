@@ -13,10 +13,11 @@ import "rxjs-compat/add/operator/first";
 import "rxjs-compat/add/observable/fromPromise";
 import "rxjs-compat/add/observable/combineLatest";
 import "rxjs-compat/add/operator/map";
-
-import {Observable} from "rxjs/Rx";
+import {Observable} from "rxjs";
+import 'rxjs/add/observable/zip';
 @Injectable()
 export class TicketService {
+
 tickId;
   constructor(private _eventService: EventService,
               private _userService: UserService,

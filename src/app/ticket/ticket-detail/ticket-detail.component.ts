@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, OnDestroy, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
-import {Observable} from "rxjs/Observable";
-import {Subscription} from "rxjs/Subscription";
+import {Observable} from "rxjs";
+import {Subscription} from "rxjs";
 import {EventModel} from "../../shared/event-model";
 import {EventService} from "../../event/event.service";
 import {TicketModel} from "../../shared/ticket-model";

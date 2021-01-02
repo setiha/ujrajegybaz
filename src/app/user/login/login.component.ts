@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserModel } from '../../shared/user-model';
 import { UserService } from '../../shared/user.service';
-import {reject} from "q";
-import {TimerObservable} from "rxjs-compat/observable/TimerObservable";
+
 
 @Component({
   selector: 'app-login',

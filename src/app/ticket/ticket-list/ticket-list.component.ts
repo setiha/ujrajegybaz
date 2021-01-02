@@ -1,10 +1,13 @@
-import {Observable} from "rxjs/Observable";
-import {TicketService} from "../../shared/ticket.service";
-import {UserService} from "../../shared/user.service";
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild} from "@angular/core";
-import {BehaviorSubject, Subscription} from "rxjs/Rx";
-import {map} from "rxjs/internal/operators";
+///<reference path="../../../../node_modules/rxjs-compat/add/observable/fromEvent.d.ts"/>
+import { Observable} from 'rxjs';
+import {TicketService} from '../../shared/ticket.service';
+import {UserService} from '../../shared/user.service';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 
+import 'rxjs-compat/add/observable/fromEvent';
+import 'rxjs-compat/add/operator/distinctUntilChanged';
 @Component({
   selector: 'app-ticket-list',
   templateUrl: './ticket-list.component.html',
@@ -21,7 +24,7 @@ export class TicketListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(private _ticketService: TicketService,
               userService: UserService,
-              private cdr: ChangeDetectorRef,) {
+              private cdr: ChangeDetectorRef ) {
     this.isLoggedinSubscription = userService.isLoggedIn$.subscribe(
       isLoggedin => this.isLoggedIn = isLoggedin
     );
