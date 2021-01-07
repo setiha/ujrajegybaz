@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
+  production: true,
   firebase: {
     baseUrl: 'https://jegybazar-133bd.firebaseio.com/',
     registrationUrl: 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key',
