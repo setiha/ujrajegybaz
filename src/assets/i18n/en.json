@@ -1,4 +1,4 @@
 {
   "SIMPLE": "Simple text",
-  "WITHVARIABLE": "Hello{{variableValue}}"
+  "WITHVARIABLE": "Hello {{variableValue}}"
 }
