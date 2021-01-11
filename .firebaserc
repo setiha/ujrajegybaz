@@ -1,6 +1,7 @@
 {
   "projects": {
-    "default": "jegybazar-133bd"
+    "default": "jegybazar-133bd",
+    "jegybazar": "jegybazar-133bd"
   },
   "targets": {
     "jegybazar-133bd": {
