@@ -1,4 +1,20 @@
 {
   "SIMPLE": "Sima szoveg",
-  "WITHVARIABLE": "Szia{{variableValue}}"
+  "WITHVARIABLE": "Szia{{variableValue}}",
+  "APP": {
+    "TITLE": "Jegybazar"
+  },
+  "EVENTS": {},
+  "TICKETS": {},
+  "JUMBOTRON": {
+    "FIRST": "Jegyek barkitol, barhonnan, barmikor",
+    "SECOND": "Használd a Jegybazárt és csereberélj jegyeket a legjobb bulikra. Elfogyott? Az orrod elől vitték el az utolsót? Ne aggódj, irány a JegyBazár!"
+  },
+  "HOME":{
+    "LABELS":{
+      "EVENTS": "Esemenyek",
+      "TICKETS":"Jegyek",
+      "REGISTRATION":"Regisztracio"
+    }
+  }
 }

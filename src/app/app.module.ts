@@ -30,6 +30,7 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {HomeComponent} from './home/home.component';
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -40,7 +41,7 @@ export function createTranslateLoader(http: HttpClient) {
     ...AppRoutingModule.routableComponent,
     TicketDetailsCardComponent,
     BiddingCardComponent,
-    BidFormComponent,
+    BidFormComponent
   ],
   imports: [
     BrowserModule,
@@ -80,6 +81,6 @@ export class AppModule {
   constructor(translateService: TranslateService) {
     firebase.initializeApp(environment.firebase);
     translateService.setDefaultLang('hu');
-    translateService.use('en');
+    translateService.use('hu');
   }
 }

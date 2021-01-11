@@ -21,13 +21,13 @@
       </tr>
       <tr>
         <th scope="row">Licit lépcső:</th>
-        <td>{{ticket.bidStep }} Ft</td>
+        <td>{{++ticket.bidStep }} Ft</td>
       </tr>
       <tr>
         <td colspan="2">Licit lejar <strong>{{ticket.bidEndDate}}</strong></td>
       </tr>
       </tbody>
     </table>
-    <app-bid-form *ngIf="isLoggedIn" [ticket]="ticket" (bid)="onBidWithBidStep()"></app-bid-form>
+    <app-bid-form *ngIf="isLoggedIn" [ticket]="ticket" (click)="onBidWithBidStep()"></app-bid-form>
   </div>
 </div>

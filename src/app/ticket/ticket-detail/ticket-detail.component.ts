@@ -14,7 +14,6 @@ import {UserService} from "../../shared/user.service";
   styleUrls: ['./ticket-detail.component.css']
 })
 export class TicketDetailComponent implements OnInit, AfterViewInit, OnDestroy {
-  tickId;
   ticket: TicketModel;
   events$: Observable<EventModel[]>;
 
@@ -29,6 +28,9 @@ export class TicketDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     this.ticket = new TicketModel();
     this.ticket.id = '';
+    this.ticket.currentBid = 0;
+    this.ticket.bidCounter = 0;
+
     // ez egy kerulo megoldas, hogy tudjak select-nek default uzenetet kijelezeni
     // nem igazan szep, de tobbet most nem ert nekem a kerdes
     this.ticket.eventId = null;

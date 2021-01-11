@@ -7,6 +7,8 @@ import {NavbarItemComponent} from "./navbar-item/navbar-item.component";
 import {LoadingSpinnerComponent} from "./loading-spinner/loading-spinner.component";
 import {CollapseModule} from "ngx-bootstrap/collapse";
 import {RouterModule} from "@angular/router";
+import {TranslateModule} from '@ngx-translate/core';
+import {HomeComponent} from '../home/home.component';
 
 
 
@@ -21,7 +23,8 @@ import {RouterModule} from "@angular/router";
   imports: [
     CommonModule,
     CollapseModule,
-    RouterModule
+    RouterModule,
+    TranslateModule
   ],
 
   exports: [

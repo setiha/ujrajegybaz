@@ -6,7 +6,6 @@ import {TicketModel} from "../../shared/ticket-model";
   selector: 'app-bidding-card',
   templateUrl: './bidding-card.component.html',
   styleUrls: ['./bidding-card.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BiddingCardComponent implements OnChanges {
   @Input() ticket: TicketModel;

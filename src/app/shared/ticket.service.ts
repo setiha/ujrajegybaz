@@ -94,6 +94,7 @@ tickId;
         this._eventService.addTicket(ticket.eventId, ticketId),
         this._userService.addTicket(ticketId),
         this.afDb.object(`tickets/${ticketId}`).update({id: ticketId}),
+        this.afDb.object(`tickets/${ticketId}`).update({bidStep: ++ticket.bidStep}),
         )
       );
   }

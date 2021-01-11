@@ -7,6 +7,6 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./loading-spinner.component.css']
 })
 export class LoadingSpinnerComponent {
-@Input() loaderWidth  = 120;
-@Input() loaderHeight = 120;
+  @Input() loaderWidth  = 120;
+  @Input() loaderHeight = 120;
 }

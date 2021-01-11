@@ -1,4 +1,20 @@
 {
   "SIMPLE": "Simple text",
-  "WITHVARIABLE": "Hello {{variableValue}}"
+  "WITHVARIABLE": "Hello {{variableValue}}",
+  "APP":{
+    "TITLE": "Events bid"
+  },
+  "EVENTS":{},
+  "TICKETS":{},
+  "JUMBOTRON": {
+    "FIRST": "Tickets from anyone, anywhere, anytime",
+    "SECOND": "Use the Events bid and exchange tickets for the best parties"
+  },
+  "HOME":{
+    "LABELS":{
+      "EVENTS": "Events",
+      "TICKETS":"Tickets",
+      "REGISTRATION":"Registration"
+    }
+  }
 }

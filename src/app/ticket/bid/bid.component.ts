@@ -9,7 +9,6 @@ import {Observable, Subscription} from "rxjs";
   selector: 'app-bid',
   templateUrl: './bid.component.html',
   styleUrls: ['./bid.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BidComponent implements OnInit, OnDestroy {
 

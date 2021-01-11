@@ -1,18 +1,13 @@
-
-import {
-  ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output,
-  SimpleChanges
-} from "@angular/core";
-import {TicketModel} from "../../shared/ticket-model";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {bidMinimumValidator} from "./bid.validators";
-import {BidService} from "../../shared/bid.service";
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {TicketModel} from '../../shared/ticket-model';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {bidMinimumValidator} from './bid.validators';
+import {BidService} from '../../shared/bid.service';
 
 @Component({
   selector: 'app-bid-form',
   templateUrl: './bid-form.component.html',
   styleUrls: ['./bid-form.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BidFormComponent implements OnInit, OnChanges {
 
@@ -30,10 +25,10 @@ export class BidFormComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
+
     if (changes['ticket'] !== null
       && !changes['ticket'].isFirstChange()
-      && changes['ticket'].currentValue !== null){
+      && changes['ticket'].currentValue !== null) {
       this.disabled = false;
       this.form.reset({bid: null});
       this.form.get('bid').enable();
@@ -83,14 +78,18 @@ export class BidFormComponent implements OnInit, OnChanges {
   }
 
   onSubmit() {
-    this.submitted = true;
-    if (this.form.valid) {
+    this.submitted = false;
+    if (this.form.invalid) {
+      this.submitted = true;
+    }
+    else {
       this.toBid(this.form.value.bid)
         .subscribe({
           next: () => {
             this.submitted = false;
             this.submitSuccessAlert = true;
             this.bid.emit();
+            this.displayBidStep = true;
           },
           error: err => {
             console.error(err);
@@ -98,9 +97,6 @@ export class BidFormComponent implements OnInit, OnChanges {
           }
         });
     }
-    console.log('Licitaltak');
-    console.log(this.form.value);
-    console.log(this.form.valid);
   }
 
   toBid(value: number) {
